@@ -1,0 +1,19 @@
+<div style="max-width: 350px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; font-family: sans-serif;">
+  <h2 style="text-align: center;">Iniciar Sesión - King Tooky</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <div style="margin-bottom: 15px;">
+      <label for="usuario" style="display: block; margin-bottom: 5px;">Usuario:</label>
+      <input type="text" id="usuario" [(ngModel)]="credenciales.usuario" name="usuario" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label for="contrasena" style="display: block; margin-bottom: 5px;">Contraseña:</label>
+      <input type="password" id="contrasena" [(ngModel)]="credenciales.contrasena" name="contrasena" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+    </div>
+
+    <button type="submit" style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+      Ingresar
+    </button>
+  </form>
+</div>
