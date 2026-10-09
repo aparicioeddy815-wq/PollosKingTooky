@@ -1,33 +1,39 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ValidarAccesoService } from './service/validar-acceso';
-import { AccesoModel } from './interface/acceso-model';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'; // 1. Importar FormsModule
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-validar-acceso',
-  standalone: true,
-  imports: [FormsModule],
+  standalone: true, // Si tu componente es Standalone
+  imports: [FormsModule, HttpClientModule], // 2. Agregarlo aquí
   templateUrl: './validar-acceso.html',
-  styleUrl: './validar-acceso.css'
+  styleUrls: ['./validar-acceso.css']
 })
 export class ValidarAccesoComponent {
-  credenciales: AccesoModel = {
-    usuario: '',
+  credentials = {
+    nombreUsuario: '',
     contrasena: ''
   };
 
-  constructor(private accesoService: ValidarAccesoService) {}
+  private apiUrl = 'http://localhost:8080/api/auth/login';
 
-  onSubmit() {
-    this.accesoService.login(this.credenciales).subscribe({
-      next: (response: any) => {
-        console.log('Login exitoso, token:', response.token);
-        localStorage.setItem('token', response.token);
+  constructor(private http: HttpClient, private router: Router) {}
+
+  onLogin() {
+    console.log('Datos enviados:', this.credentials);
+
+    this.http.post<any>(this.apiUrl, this.credentials).subscribe({
+      next: (response) => {
+        console.log('¡Inicio de sesión exitoso!', response);
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+        }
         alert('¡Bienvenido!');
       },
-      error: (err: any) => {
-        console.error('Error al iniciar sesión', err);
-        alert('Usuario o contraseña incorrectos');
+      error: (error) => {
+        console.error('Error al iniciar sesión:', error);
+        alert('Credenciales incorrectas o problema de servidor.');
       }
     });
   }

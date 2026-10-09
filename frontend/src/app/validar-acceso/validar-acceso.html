@@ -1,7 +1,6 @@
 <div class="login-wrapper">
   <div class="login-card">
 
-    <!-- LADO IZQUIERDO: Formulario + Logo -->
     <div class="login-left">
       <div class="logo-container">
         <img src="/logo-tokky.webp" alt="King Tooky Logo" class="brand-logo">
@@ -13,11 +12,11 @@
         <div class="form-group">
           <label for="usuario">Usuario o Correo</label>
           <input
-            type="email"
+            type="text"
             id="usuario"
-            name="usuario"
-            [(ngModel)]="credentials.email"
-            placeholder="Ej: admin@gmail.com"
+            name="nombreUsuario"
+            [(ngModel)]="credentials.nombreUsuario"
+            placeholder="Ej: admin"
             required>
         </div>
 
@@ -26,8 +25,8 @@
           <input
             type="password"
             id="password"
-            name="password"
-            [(ngModel)]="credentials.password"
+            name="contrasena"
+            [(ngModel)]="credentials.contrasena"
             placeholder="••••••••"
             required>
         </div>
@@ -36,9 +35,8 @@
       </form>
     </div>
 
-    <!-- LADO DERECHO: Fondo promocional con degradado naranja/rojo -->
     <div class="login-right">
-      <div class="overlay">
+      <div class="overlay-text">
         <h2>KING TOOKY</h2>
         <p>Sistema de gestión para restaurante y control de pedidos.</p>
       </div>
