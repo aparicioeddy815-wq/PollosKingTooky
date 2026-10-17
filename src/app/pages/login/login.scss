@@ -1,0 +1,414 @@
+$brand-red: #D8231E;
+$brand-orange: #EA6B1A;
+$brand-cream: #FFF9F5;
+$text-dark: #1e293b;
+$text-muted: #64748b;
+$border-color: #e2e8f0;
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, $brand-cream, #ffffff, rgba(255, 237, 213, 0.4));
+  font-family: 'Poppins', 'Inter', sans-serif;
+  color: $text-dark;
+
+  .login-header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #fed7aa;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+
+    .logo-img {
+      height: 45px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(to right, $brand-orange, $brand-red);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 0.9;
+      }
+
+      .icon-home {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
+
+  .login-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+
+    .login-container-card {
+      background: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      border: 1px solid #fed7aa;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr;
+      width: 100%;
+      max-width: 1100px;
+
+      @media (min-width: 1024px) {
+        grid-template-columns: repeat(12, 1fr);
+        min-height: 680px;
+      }
+
+      .visual-showcase {
+        grid-column: span 5;
+        position: relative;
+        min-height: 300px;
+        background: #f1f5f9;
+
+        @media (min-width: 1024px) {
+          min-height: 100%;
+          order: 2;
+        }
+
+        img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+
+          &:hover {
+            transform: scale(1.03);
+          }
+        }
+      }
+
+      .login-section {
+        grid-column: span 7;
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        @media (min-width: 1024px) {
+          order: 1;
+          padding: 3rem;
+        }
+
+        .form-content-wrapper {
+          max-width: 440px;
+          margin: 0 auto;
+          width: 100%;
+
+          .form-header {
+            margin-bottom: 2rem;
+            text-align: center;
+
+            @media (min-width: 640px) {
+              text-align: left;
+            }
+
+            .club-badge {
+              display: inline-flex;
+              align-items: center;
+              gap: 0.4rem;
+              padding: 0.35rem 0.85rem;
+              border-radius: 9999px;
+              font-size: 0.75rem;
+              font-weight: 800;
+              background-color: #ffedd5;
+              color: $brand-orange;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              margin-bottom: 0.75rem;
+
+              .star-icon {
+                width: 0.9rem;
+                height: 0.9rem;
+                fill: currentColor;
+              }
+            }
+
+            h1 {
+              font-size: 1.85rem;
+              font-weight: 800;
+              letter-spacing: -0.025em;
+              color: $text-dark;
+              margin: 0 0 0.5rem 0;
+
+              .highlight-red {
+                color: $brand-red;
+              }
+            }
+
+            p {
+              font-size: 0.875rem;
+              color: $text-muted;
+              margin: 0;
+            }
+          }
+
+          .auth-tabs {
+            display: flex;
+            padding: 0.25rem;
+            margin-bottom: 1.5rem;
+            background: #f1f5f9;
+            border-radius: 0.75rem;
+
+            button {
+              flex: 1;
+              padding: 0.65rem;
+              text-align: center;
+              font-size: 0.875rem;
+              font-weight: 600;
+              border-radius: 0.5rem;
+              border: none;
+              background: transparent;
+              color: $text-muted;
+              cursor: pointer;
+              transition: all 0.2s;
+
+              &.active {
+                background: white;
+                color: $brand-red;
+                font-weight: 700;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+              }
+            }
+          }
+
+          .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            .field-group {
+              display: flex;
+              flex-direction: column;
+              gap: 0.35rem;
+
+              label {
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: #334155;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+              }
+
+              .input-container {
+                position: relative;
+                display: flex;
+                align-items: center;
+
+                .field-icon {
+                  position: absolute;
+                  left: 0.85rem;
+                  color: #94a3b8;
+                  display: flex;
+                  align-items: center;
+                }
+
+                input {
+                  width: 100%;
+                  border-radius: 0.75rem;
+                  border: 1px solid $border-color;
+                  padding: 0.75rem 0.85rem 0.75rem 2.75rem;
+                  font-size: 0.875rem;
+                  color: $text-dark;
+                  outline: none;
+                  transition: all 0.2s;
+
+                  &::placeholder {
+                    color: #94a3b8;
+                  }
+
+                  &:focus {
+                    border-color: $brand-orange;
+                    box-shadow: 0 0 0 3px rgba(234, 107, 26, 0.2);
+                  }
+                }
+
+                .toggle-password {
+                  position: absolute;
+                  right: 0.85rem;
+                  background: none;
+                  border: none;
+                  color: #94a3b8;
+                  cursor: pointer;
+                  display: flex;
+                  align-items: center;
+
+                  &:hover {
+                    color: $brand-orange;
+                  }
+                }
+              }
+            }
+
+            .form-options {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              font-size: 0.875rem;
+              padding-top: 0.25rem;
+
+              .remember-label {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: pointer;
+                user-select: none;
+
+                input {
+                  width: 1rem;
+                  height: 1rem;
+                  border-radius: 0.25rem;
+                  border: 1px solid #cbd5e1;
+                  accent-color: $brand-red;
+                }
+
+                span {
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  color: $text-muted;
+                }
+              }
+
+              .forgot-link {
+                font-size: 0.875rem;
+                font-weight: 600;
+                color: $brand-orange;
+                text-decoration: none;
+                cursor: pointer;
+
+                &:hover {
+                  color: #c9550f;
+                }
+              }
+            }
+
+            .error-alert {
+              background-color: #ffeeec;
+              color: $brand-red;
+              padding: 0.6rem;
+              border-radius: 0.5rem;
+              font-size: 0.8rem;
+              font-weight: 600;
+            }
+
+            .submit-btn {
+              width: 100%;
+              margin-top: 0.5rem;
+              padding: 0.85rem 1.5rem;
+              border-radius: 0.75rem;
+              color: white;
+              font-weight: 700;
+              font-size: 1rem;
+              background: linear-gradient(to right, $brand-red, #e3451b, $brand-orange);
+              border: none;
+              cursor: pointer;
+              box-shadow: 0 10px 20px rgba(216, 35, 30, 0.25);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 0.5rem;
+              transition: transform 0.1s;
+
+              &:active {
+                transform: scale(0.99);
+              }
+
+              svg {
+                width: 1.25rem;
+                height: 1.25rem;
+              }
+            }
+          }
+
+          .divider-section {
+            position: relative;
+            margin: 1.5rem 0;
+            text-align: center;
+
+            &::before {
+              content: '';
+              position: absolute;
+              top: 50%;
+              left: 0;
+              right: 0;
+              height: 1px;
+              background: $border-color;
+            }
+
+            span {
+              position: relative;
+              background: white;
+              padding: 0 0.75rem;
+              font-size: 0.75rem;
+              font-weight: 600;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              color: #94a3b8;
+            }
+          }
+
+          .google-container {
+            display: flex;
+            justify-content: center;
+
+            .google-btn {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 0.6rem;
+              padding: 0.65rem 1.5rem;
+              border-radius: 0.75rem;
+              border: 1px solid $border-color;
+              background: white;
+              color: #334155;
+              font-size: 0.875rem;
+              font-weight: 600;
+              cursor: pointer;
+              box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+              transition: background 0.2s;
+
+              &:hover {
+                background: #f8fafc;
+              }
+
+              svg {
+                width: 1rem;
+                height: 1rem;
+              }
+            }
+          }
+
+        }
+      }
+
+    }
+  }
+}

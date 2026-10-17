@@ -1,0 +1,205 @@
+<div class="landing-page">
+  <nav class="navbar">
+    <div class="logo">
+      <span class="logo-text">TOOKY</span>
+    </div>
+    <ul class="nav-links">
+      <li><a class="active">Inicio</a></li>
+      <li><a (click)="scrollTo('combos')">Menú</a></li>
+      <li><a (click)="scrollTo('ubicacion')">Ubicación</a></li>
+      <li><a>Sobre Nosotros</a></li>
+    </ul>
+    <button class="btn-login" (click)="goToLogin()">Iniciar Sesión</button>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-text">
+      <span class="tagline">EL SABOR LEGENDARIO DE KING TOOKY</span>
+      <h1>El Pollo <span>Más Delicioso</span> de la Ciudad</h1>
+      <button class="btn-ver-menu" (click)="scrollTo('combos')">
+        <span>🍊</span> Ver Menú
+      </button>
+
+      <div class="info-pills">
+        <div class="pill">
+          <span>🕒 HORARIO EN SALÓN</span>
+          <strong>11:00 - 23:00</strong>
+        </div>
+        <div class="pill">
+          <span>📍 UBICACIÓN</span>
+          <strong>El Prado, La Paz</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=700&q=80" alt="Pollo Delicioso">
+      <div class="floating-card">
+        <span>🔥 RECOMENDACIÓN DE LA CASA</span>
+        <strong>Combo Económico 1</strong>
+        <span class="price">Bs 41</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Categories Bar -->
+  <section class="category-section">
+    <span class="cat-label">🐱 Explora por Categoría</span>
+    <div class="cat-buttons">
+      <button class="cat-btn active" (click)="scrollTo('combos')">🍟 Combos Populares</button>
+      <button class="cat-btn" (click)="scrollTo('pollos')">🍗 Pollo Frito Clásico</button>
+      <button class="cat-btn" (click)="scrollTo('picar')">🍿 Pipocas & Salchipapas</button>
+      <button class="cat-btn" (click)="scrollTo('picar')">🍲 Guarniciones de Casa</button>
+      <button class="cat-btn">🥤 Bebidas Frías</button>
+    </div>
+  </section>
+
+  <!--Combos Populares -->
+  <section id="combos" class="menu-block">
+    <span class="sub-title">¡LOS MÁS PEDIDOS!</span>
+    <h2>Combos Populares King Tooky</h2>
+    <p class="subtitle-desc">Todos incluyen guarniciones a elección completa y gaseosa de 300ml o familiar.</p>
+
+    <div class="grid-4">
+      <div *ngFor="let item of combos" class="card-combo">
+        <div class="card-img">
+          <img [src]="item.img" [alt]="item.title">
+          <span class="badge-top">{{ item.badge }}</span>
+          <span class="badge-disp">Disponible</span>
+        </div>
+        <div class="card-body">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.desc }}</p>
+          <div class="tag-list">
+            <span *ngFor="let t of item.tags" class="tag">{{ t }}</span>
+          </div>
+          <div class="card-price">
+            <span class="price-val">Bs {{ item.price }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="center-btn">
+      <button class="btn-pedir">🛒 Pedir ahora</button>
+    </div>
+  </section>
+
+  <!--Especialidades de Pollo -->
+  <section id="pollos" class="menu-block">
+    <span class="sub-title">FRESCO & INCOMPARABLE</span>
+    <h2>Nuestras Especialidades de Pollo</h2>
+    <p class="subtitle-desc">Todas las porciones de especialidad incluyen 2 guarniciones a elección.</p>
+
+    <div class="grid-2">
+      <div *ngFor="let item of especialidades" class="card-horizontal">
+        <img [src]="item.img" [alt]="item.title">
+        <div class="card-h-info">
+          <div class="h-header">
+            <h3>{{ item.title }}</h3>
+            <span class="h-price">Bs {{ item.price }}</span>
+          </div>
+          <p>{{ item.desc }}</p>
+          <span class="h-tag">2 GUARNICIONES INCLUIDAS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="center-btn">
+      <button class="btn-pedir">🛒 Pedir ahora</button>
+    </div>
+  </section>
+
+  <!--Para Picar & Guarniciones -->
+  <section id="picar" class="menu-block">
+    <span class="sub-title">ANTOJOS Y COMPLEMENTOS</span>
+    <h2>Para Picar & Guarniciones</h2>
+    <p class="subtitle-desc">El toque especial de King Tooky: nuestras pastas caseras y bocados crujientes.</p>
+
+    <div class="grid-3">
+      <div *ngFor="let item of guarniciones" class="card-simple">
+        <div class="card-img">
+          <img [src]="item.img" [alt]="item.title">
+          <span class="badge-disp">Disponible</span>
+        </div>
+        <div class="card-body">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.desc }}</p>
+          <span class="price-val">Bs {{ item.price }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="center-btn">
+      <button class="btn-pedir">🛒 Pedir ahora</button>
+    </div>
+  </section>
+
+  <!Sucursal Principal -->
+  <section id="ubicacion" class="sucursal-section">
+    <div class="sucursal-info">
+      <h2>Sucursal Principal</h2>
+      <p>Ambiente familiar climatizado, áreas cómodas y espacio para festejos.</p>
+
+      <div class="info-item">
+        <span>📍 Av. 16 de Julio (El Prado) esq. Bueno - Centro, La Paz</span>
+        <small>A pasos de la Plaza de Estudiante, La Paz, Bolivia</small>
+      </div>
+
+      <div class="info-item">
+        <span>🕒 Horario de Salón & Delivery</span>
+        <small>Lunes a Domingo: 11:00 AM - 11:00 PM (Continuado)</small>
+      </div>
+
+      <div class="info-item">
+        <span>📞 Teléfonos Directos</span>
+        <small>Central La Paz: 2244-1234 | WhatsApp Pedidos: +591 7654-3210</small>
+      </div>
+    </div>
+
+    <div class="map-box">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.4382902381987!2d-68.1343722!3d-16.5015383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915edf0a00000001%3A0x123456789!2sEl%20Prado%2C%20La%20Paz!5e0!3m2!1ses!2sbo!4v1600000000000!5m2!1ses!2sbo"
+        width="100%" height="300" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-col">
+      <span class="footer-logo">TOOKY</span>
+      <p>Sabor crujiente e inimitable, pollo 100% legendario y hamburguesas deliciosas preparadas al momento en el corazón de La Paz.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Explorar Menú</h4>
+      <ul>
+        <li>Pollos Crujientes Original</li>
+        <li>Hamburguesas Monster</li>
+        <li>Combos Familiares & Fiestas</li>
+        <li>Acompañamientos & Dips</li>
+        <li>Bebidas & Postres</li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Enlaces Rápidos</h4>
+      <ul>
+        <li>Sucursales y Zonas de Entrega</li>
+        <li>Facturación Electrónica</li>
+        <li>Términos & Condiciones</li>
+        <li>Aviso de Privacidad</li>
+        <li>Bolsa de Trabajo</li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Horarios de Atención</h4>
+      <p><strong>Lunes - Jueves:</strong> 11:00 AM - 10:00 PM</p>
+      <p><strong>Viernes - Sábado:</strong> 11:00 AM - 11:30 PM</p>
+      <p><strong>Domingos:</strong> 12:00 PM - 10:30 PM</p>
+      <p class="phone-foot">📞 +591 7654-3210 (La Paz)</p>
+    </div>
+  </footer>
+</div>
