@@ -1,0 +1,150 @@
+<div class="despacho-container">
+  <!-- Sidebar Lateral -->
+  <aside class="sidebar" [ngClass]="{ 'closed': !sidebarOpen }">
+    <div class="sidebar-top">
+      <div class="sidebar-header">
+        <div class="logo-box"></div>
+        <div class="brand-text">
+          <span class="brand-title">KING TOOKY</span>
+          <span class="brand-subtitle">Despacho &amp; KDS</span>
+        </div>
+      </div>
+      <div class="section-label">OPERACIONES Y SALÓN</div>
+      <nav class="nav-links">
+        <a href="#" class="active">
+          <span class="icon"></span>
+          <span>Comandas en Vivo</span>
+        </a>
+        <a href="#">
+          <span class="icon"></span>
+          <span>Audio &amp; Alertas</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="station-card">
+        <div class="avatar"></div>
+        <div class="station-info">
+          <span class="station-name">Estación 04</span>
+          <span class="station-role">Despacho / Cocina</span>
+        </div>
+      </div>
+      <a href="#" class="logout-btn">
+        <span class="icon"></span>
+        <span>Cerrar sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <div class="main-wrapper" [ngClass]="{ 'full': !sidebarOpen }">
+    <!-- Header Superior -->
+    <header class="top-header" [ngClass]="{ 'full': !sidebarOpen }">
+      <span class="header-title">Panel de Turnos &amp; Despacho</span>
+      <div class="header-status">
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>EN LÍNEA · SALÓN PRINCIPAL</span>
+        </div>
+        <button class="fullscreen-btn" onclick="document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen()" title="Pantalla Completa">
+        </button>
+      </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="content-area">
+      <!-- Action Bar -->
+      <div class="action-bar">
+        <button class="btn-primary" (click)="addNewOrder()">
+          <span class="btn-icon"></span>
+          <span>+ Agregar Pedido</span>
+        </button>
+
+        <div class="actions-group">
+          <button class="btn-timbre" (click)="playDingDong()">
+            <span class="btn-icon"></span>
+            <span>Timbre / Sonido</span>
+          </button>
+          <button class="btn-salon" (click)="toggleHallwayFullscreen()">
+            <span class="btn-icon"></span>
+            <span>Modo Salón</span>
+          </button>
+          <button class="btn-menu" (click)="toggleSidebarView()">
+            <span class="btn-icon">☰</span>
+            <span>{{ sidebarOpen ? 'Ocultar Menú' : 'Mostrar Menú' }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tablero General de Turnos -->
+      <section class="turnero-section">
+        <div class="turnero-header">
+          <div class="header-left">
+            <div class="turnero-icon"></div>
+            <div>
+              <div class="turnero-sub">
+                <span>TURNERO ELECTRÓNICO UNIFICADO</span>
+                <span class="status-dot"></span>
+              </div>
+              <h2 class="turnero-title">TABLERO GENERAL DE TURNOS</h2>
+            </div>
+          </div>
+
+          <div class="legend">
+            <div class="badge-r">
+              <span class="r-square">R</span>
+              <span>Número Rojo = Listo para Retirar</span>
+            </div>
+            <div class="legend-divider"></div>
+            <div class="badge-n">
+              <span class="n-square">N</span>
+              <span>Número Naranja = En Preparación</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grilla de Turnos -->
+        <div class="turnero-grid">
+          @for (ticket of tickets; track ticket.number) {
+            @if (ticket.status === 'READY') {
+              <article class="ticket-card ready">
+                <div class="ticket-top">
+                  <span class="ticket-badge">
+                    ✓ LISTO PARA RETIRAR
+                  </span>
+                  <button class="timbre-btn" (click)="playDingDong(ticket.number)">
+                    Timbre
+                  </button>
+                </div>
+                <div class="ticket-body">
+                  <span class="ticket-number">{{ ticket.number }}</span>
+                </div>
+                <button class="ticket-btn" (click)="markAsDelivered(ticket.number)">
+                  ✓ Entregado
+                </button>
+              </article>
+            } @else {
+              <article class="ticket-card preparing">
+                <div class="ticket-top">
+                  <span class="ticket-badge">
+                    EN PREPARACIÓN
+                  </span>
+                  <span class="timer">
+                    {{ ticket.timeAgo }}
+                  </span>
+                </div>
+                <div class="ticket-body">
+                  <span class="ticket-number">{{ ticket.number }}</span>
+                </div>
+                <button class="ticket-btn" (click)="markAsReady(ticket.number)">
+                  ✓ Marcar como Listo
+                </button>
+              </article>
+            }
+          }
+        </div>
+      </section>
+    </main>
+  </div>
+</div>

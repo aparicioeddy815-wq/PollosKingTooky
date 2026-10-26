@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,9 @@ import { Router } from '@angular/router';
   styleUrl: './login.scss'
 })
 export class LoginComponent {
+  private router = inject(Router);
+  private authService = inject(AuthService);
+
   username: string = '';
   password: string = '';
   rememberMe: boolean = false;
@@ -18,11 +22,12 @@ export class LoginComponent {
   isLoginTab: boolean = true;
   errorMessage: string = '';
   isLoading: boolean = false;
-
-  constructor(private router: Router) {}
-
   goToMenu(): void {
     this.router.navigate(['/menu']);
+  }
+
+  goToDespacho(): void {
+    this.router.navigate(['/despacho']);
   }
 
   onLogin(): void {
@@ -33,14 +38,27 @@ export class LoginComponent {
 
     this.isLoading = true;
     this.errorMessage = '';
+    this.authService.login({ username: this.username, password: this.password }).subscribe({
+      next: (response) => {
+        this.isLoading = false;
 
-    setTimeout(() => {
-      this.isLoading = false;
-      if (this.username === 'admin' && this.password === 'admin123') {
-        this.router.navigate(['/menu']);
-      } else {
-        this.errorMessage = 'Credenciales incorrectas. Intenta nuevamente.';
+        // El backend valida en la BD y nos devuelve el rol correspondiente
+        if (response.role === 'DESPACHO') {
+          this.router.navigate(['/despacho']);
+        } else {
+          this.router.navigate(['/menu']);
+        }
+      },
+      error: (err) => {
+        this.isLoading = false;
+
+        // Si el backend rechaza las credenciales
+        if (err.status === 401 || err.status === 403 || err.status === 400) {
+          this.errorMessage = 'Usuario o contraseña incorrectos. Acceso denegado por la base de datos.';
+        } else {
+          this.errorMessage = 'No se pudo conectar con el servidor backend.';
+        }
       }
-    }, 1200);
+    });
   }
 }
