@@ -1,0 +1,232 @@
+<!-- Carga de Material Symbols Google Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+<div class="gerente-container">
+  <!-- Sidebar Lateral Izquierdo -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="logo-box">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJm145QSVVhC-H8TPSvSUnNuBVSqXDY10dxMhk-dAu5Q8VzoCuE0-0eZrIEC46cgplCkuIzcKoiiD5jJGWX84R6NZJz8le_krhmj8339TDcvxP9UzvshWS2ds7793TZJRfKs-98RnbXeSlBTMT3K_f8G1J5D4LU4NJwg1FIdkedXFDy4ocs_NCulXxVot9obfLyYca1kCwFJoTkihEaZAQXgLWyy1uSPzZSyrgFeU572pJrgf9pv29fL71I_Xrr8s0kQ" alt="King Tooky Logo" class="brand-logo">
+        <div class="brand-text">
+          <span class="role-title">Gerente de Tienda</span>
+          <span class="panel-subtitle">PANEL DE CONTROL</span>
+        </div>
+      </div>
+      <div class="menu-section-label">OPERACIONES</div>
+      <nav class="nav-menu">
+        <a class="nav-item active" href="#">
+          <span class="material-symbols-outlined">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">reviews</span>
+          <span>Ver todas (2)</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">person_search</span>
+          <span>Entrevistas</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span>Inventario</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">badge</span>
+          <span>Roles</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">account_circle</span>
+          <span>Mi Perfil</span>
+        </a>
+      </nav>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="user-pill">
+        <div class="avatar">G</div>
+        <div class="user-info">
+          <span class="user-name">Gerente de Tienda</span>
+          <span class="user-email">gerencia&#64;kingtooky.com</span>
+        </div>
+      </div>
+      <button class="btn-logout" type="button" (click)="cerrarSesion()">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Cerrar sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <div class="main-wrapper">
+    <!-- Header Superior -->
+    <header class="top-header">
+      <div class="search-box">
+        <span class="material-symbols-outlined">search</span>
+        <input type="search" placeholder="Buscar pedidos, insumos o solicitudes...">
+      </div>
+      <div class="header-right">
+        <div class="status-badge">
+          <span class="pulse-dot"></span>
+          <span>En Línea</span>
+        </div>
+        <button class="icon-btn" type="button">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notif-dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Canvas Principal -->
+    <main class="dashboard-canvas">
+      <!-- Action Header -->
+      <div class="executive-header">
+        <div>
+          <h1 class="page-title">Panel del Gerente General</h1>
+          <p class="page-subtitle">Sucursal Central La Paz • Monitor de rendimiento en tiempo real y flujo operativo</p>
+        </div>
+        <div class="action-buttons">
+          <div class="date-pill">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <span>Hoy, 26 Octubre 2026</span>
+          </div>
+          <button class="btn-export" type="button">
+            <span class="material-symbols-outlined">download</span>
+            <span>Exportar Reporte</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="canvas-content">
+        <!-- 5 KPI Cards -->
+        <section class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">VENTAS DE HOY</span>
+              <div class="kpi-icon icon-primary"><span class="material-symbols-outlined">payments</span></div>
+            </div>
+            <div class="kpi-value text-primary">Bs 8,420</div>
+            <span class="kpi-trend text-primary">+14.2% vs ayer</span>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">PEDIDOS ATENDIDOS</span>
+              <div class="kpi-icon icon-secondary"><span class="material-symbols-outlined">receipt_long</span></div>
+            </div>
+            <div class="kpi-value">148</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title text-error">STOCK CRÍTICO</span>
+              <div class="kpi-icon icon-error"><span class="material-symbols-outlined">warning</span></div>
+            </div>
+            <div class="kpi-value text-error">3 Ítems</div>
+            <span class="kpi-subtext">Aceite, Muslos, Cajas</span>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">SUGERENCIAS / QUEJAS</span>
+              <div class="kpi-icon icon-warn"><span class="material-symbols-outlined">reviews</span></div>
+            </div>
+            <div class="kpi-value">5 <span class="kpi-tag">Pendientes</span></div>
+            <span class="kpi-subtext">Satisfacción: 94.6%</span>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">ENTREVISTAS HOY</span>
+              <div class="kpi-icon icon-tertiary"><span class="material-symbols-outlined">group_add</span></div>
+            </div>
+            <div class="kpi-value">2 Citas</div>
+            <span class="kpi-subtext text-tertiary">15:30 y 17:00</span>
+          </div>
+        </section>
+
+        <!-- Banner Producto Top & Ventas por Categoría -->
+        <section class="top-product-banner">
+          <div class="product-info">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9ybLx0_0D2eyaIY07WkpQH4gMljfvsYitkK180y4xX1gGIDx2YTS-m3hlwcGXSUch-3KdV3InpoDlcE3l58I8IusGT_RAlMHsb2eRDPAuIbEMoBoXJaLRZeAbV7eCZ-002fVFheIXFoV8rqeNOWBdz8jtXDrjR8WBSkOBvkqrXlQzEYp73Rj5lIOdqbnSqsbVZFzPy6slyll50qsnSZvHR9EergjapepjmIbnVLzPqtUqu1uIgA2M" alt="Combo Tooky" class="product-img">
+            <div>
+              <span class="badge-top">TOP VENTAS DEL DÍA</span>
+              <h2>Combo Tooky Familiar (8 Pzas)</h2>
+              <p>52 unidades despachadas • Recaudación: Bs 3,380</p>
+              <div class="price-row">
+                <span class="price">Bs 65.00</span>
+                <span class="satisfaction">98% satisfacción</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn-detail" type="button">Detalles</button>
+        </section>
+
+        <!-- Ventas por Categoría -->
+        <section class="category-sales-card">
+          <div class="card-head">
+            <div>
+              <h2>Ventas por Categoría</h2>
+              <p>Comportamiento del turno actual</p>
+            </div>
+            <span class="time-badge">Actualizado hace 4 min</span>
+          </div>
+          <div class="bars-container">
+            <div class="bar-group">
+              <div class="bar-label"><span>Pollo Frito Clásico y Crispy</span><span>Bs 4,890 (58%)</span></div>
+              <div class="progress-bg"><div class="progress-fill fill-primary" style="width: 58%"></div></div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-label"><span>Hamburguesas de Res & Pollo</span><span>Bs 1,850 (22%)</span></div>
+              <div class="progress-bg"><div class="progress-fill fill-secondary" style="width: 22%"></div></div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-label"><span>Guarniciones (Papas Fritas, Arroz, Ensaladas)</span><span>Bs 1,010 (12%)</span></div>
+              <div class="progress-bg"><div class="progress-fill fill-tertiary" style="width: 12%"></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bloques Inferiores (Sugerencias & Entrevistas) -->
+        <section class="bottom-grid">
+          <div class="grid-card">
+            <div class="card-head">
+              <h2>Sugerencias y Reclamos Recientes</h2>
+              <a href="#" class="link-more">Ver todas (2)</a>
+            </div>
+            <div class="item-box">
+              <div class="item-header">
+                <span class="pill-error">RECLAMO DEMORA</span>
+                <strong>Mesa 4 • Carlos M.</strong>
+                <span class="time">Hace 22 min</span>
+              </div>
+              <p class="comment">"El combo familiar tardó casi 30 minutos en salir, el pollo delicioso y muy caliente pero hubo mucha tardanza en las papas."</p>
+              <div class="item-actions">
+                <span class="status-text">Estado: En Revisión de Cocina</span>
+                <div class="btns">
+                  <button class="btn-sm">Contactar Cliente</button>
+                  <button class="btn-sm primary">Resolver</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-card">
+            <div class="card-head">
+              <h2>Entrevistas de Personal</h2>
+              <a href="#" class="link-more">Gestionar</a>
+            </div>
+            <div class="candidate-box">
+              <div class="candidate-info">
+                <div class="avatar-circle">MR</div>
+                <div>
+                  <strong>Marco Ríos Gómez</strong>
+                  <p class="role">Postulante: Maestro Freidor / Cocinero</p>
+                </div>
+              </div>
+              <button class="btn-interview">Iniciar Entrevista</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>

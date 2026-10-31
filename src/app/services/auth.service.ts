@@ -9,11 +9,10 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token?: string;
-  role?: 'DESPACHO' | 'SALON' | 'ADMIN';
+  role?: 'DESPACHO' | 'SALON' | 'ADMIN' | 'GERENCIA' | 'CLIENTE';
   username?: string;
   message?: string;
 }
-
 @Injectable({
   providedIn: 'root'
 })

@@ -1,0 +1,280 @@
+<!-- Carga de Material Symbols Google Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+<div class="admin-container">
+  <!-- Sidebar Lateral Izquierdo (Administrador) -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="logo-box">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeE66HYBMye-PxdKavF_soXKKnRD14IIu7Is7urjhKb7U-PvRnbWJb5DH2KiaOm_a0-uCMzDsazb93kCmMxBOIjccQ1FdpaOGQmo1Yn6P3wyxeDLKn5RpxkVpg93_1nGVxsqyzfhl1mXJUfi8gXZ1-VRoykEXfaRGzqYhbmi6yApKiKlx0RJxPL8XQ2WNpmBNsAs876BUgucjZRAmY0t1ftQQ7cMn-irj-kZt2qnkTC2pHtJChEvx1rvd0b2EXN8BNFw" alt="King Tooky Logo" class="brand-logo">
+        <div class="brand-text">
+          <span class="role-title">Admin General</span>
+          <span class="panel-subtitle">PANEL DE CONTROL</span>
+        </div>
+      </div>
+      <div class="menu-section-label">GESTIÓN & AUDITORÍA</div>
+      <nav class="nav-menu">
+        <a class="nav-item active" href="#">
+          <span class="material-symbols-outlined">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">history_toggle_off</span>
+          <span>Bitácora</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">badge</span>
+          <span>Roles y Personal</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">quick_reference_all</span>
+          <span>Entrevistados</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">monitoring</span>
+          <span>Reportes</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">account_circle</span>
+          <span>Mi Perfil</span>
+        </a>
+      </nav>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="user-pill">
+        <div class="avatar">A</div>
+        <div class="user-info">
+          <span class="user-name">Admin General</span>
+          <span class="user-email">admin&#64;kingtooky.com</span>
+        </div>
+      </div>
+      <button class="btn-logout" type="button" (click)="cerrarSesion()">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Cerrar sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <div class="main-wrapper">
+    <!-- Header Superior -->
+    <header class="top-header">
+      <div class="search-box">
+        <span class="material-symbols-outlined">search</span>
+        <input type="search" placeholder="Buscar pedidos, insumos o solicitudes...">
+      </div>
+      <div class="header-right">
+        <div class="status-badge">
+          <span class="pulse-dot"></span>
+          <span>En Línea</span>
+        </div>
+        <button class="icon-btn" type="button">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notif-dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Canvas Principal -->
+    <main class="dashboard-canvas">
+      <!-- Action Header -->
+      <div class="executive-header">
+        <div>
+          <div class="badge-tag">VISIÓN CENTRAL • RESTAURANTE KING TOOKY</div>
+          <h1 class="page-title">Dashboard Ejecutivo y Control General</h1>
+          <p class="page-subtitle">Resumen operativo en tiempo real y estado de los 4 roles del restaurante King Tooky.</p>
+        </div>
+        <div class="action-buttons">
+          <div class="date-pill">
+            <span class="material-symbols-outlined text-secondary">calendar_today</span>
+            <span>Hoy: 26 Octubre 2026</span>
+          </div>
+          <button class="btn-export" type="button">
+            <span class="material-symbols-outlined">download</span>
+            <span>Exportar Resumen Diario</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="canvas-content">
+        <!-- 4 KPIs Bento Grid -->
+        <section class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">VENTAS TOTALES</span>
+              <div class="kpi-icon icon-primary"><span class="material-symbols-outlined">payments</span></div>
+            </div>
+            <div class="kpi-value text-primary">Bs 8,420</div>
+            <span class="kpi-trend text-primary">+14% vs. ayer a la misma hora</span>
+            <div class="kpi-footer-box">
+              <span>Mostrador: <strong>Bs 4,950</strong></span>
+              <span>•</span>
+              <span>Salón: <strong>Bs 3,470</strong></span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">COMANDAS PROCESADAS</span>
+              <div class="kpi-icon icon-secondary"><span class="material-symbols-outlined">receipt_long</span></div>
+            </div>
+            <div class="kpi-value">184</div>
+            <span class="kpi-subtext">12 en cocina y despacho</span>
+            <div class="kpi-footer-box">
+              <span>Completadas: <strong>172</strong></span>
+              <span>•</span>
+              <span class="text-secondary font-bold">100% físicas</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">MARGEN OPERATIVO</span>
+              <div class="kpi-icon icon-tertiary"><span class="material-symbols-outlined">donut_small</span></div>
+            </div>
+            <div class="kpi-value">68.5%</div>
+            <span class="kpi-subtext">Óptimo • Insumos y mermas en meta</span>
+            <div class="kpi-footer-box">
+              <span>Costo Pollo: <strong>22.4%</strong></span>
+              <span>•</span>
+              <span>Desperdicio: <strong>1.2%</strong></span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">SESIONES EN VIVO</span>
+              <div class="kpi-icon icon-primary"><span class="material-symbols-outlined">badge</span></div>
+            </div>
+            <div class="kpi-value">13 <span class="unit">usuarios</span></div>
+            <span class="kpi-subtext">4 Roles sincronizados</span>
+            <div class="roles-mini-grid">
+              <div><span>ADM</span><strong>2</strong></div>
+              <div><span>GER</span><strong>2</strong></div>
+              <div><span>DES</span><strong>3</strong></div>
+              <div><span>CLI</span><strong class="text-primary">6</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Fila de Gráfico y Top Menú -->
+        <section class="middle-grid">
+          <div class="chart-card">
+            <div class="card-head">
+              <div>
+                <h2>Ritmo de Ventas por Hora</h2>
+                <p>Comparativo de pedidos en mostrador vs. mesas de salón</p>
+              </div>
+              <div class="chart-legend">
+                <span class="dot primary"></span> Mostrador
+                <span class="dot secondary"></span> Salón Físico
+              </div>
+            </div>
+            <!-- Mock visual de gráfico de líneas -->
+            <div class="chart-mock">
+              <div class="line-container">
+                <div class="simulated-curve primary-curve"></div>
+                <div class="simulated-curve secondary-curve"></div>
+              </div>
+              <div class="chart-axis">
+                <span>11:00</span><span>12:30</span><span>14:00 (Pico Almuerzo)</span><span>16:00</span><span>18:30</span><span>20:00 (Cena)</span><span>21:30</span>
+              </div>
+            </div>
+            <div class="chart-footer-note">
+              <span>Pico de ventas registrado: <strong>19:30 - 20:30 (Bs 1,890)</strong></span>
+              <span class="tag-pico">PICO DE MOSTRADOR</span>
+            </div>
+          </div>
+
+          <div class="top-menu-card">
+            <div class="card-head">
+              <div>
+                <h2>Top del Menú</h2>
+                <p>Favoritos de hoy en sala y caja</p>
+              </div>
+              <span class="material-symbols-outlined text-secondary">local_fire_department</span>
+            </div>
+            <div class="menu-items-list">
+              <div class="menu-row">
+                <div class="menu-info"><span class="rank-badge red">1</span><div><strong>Pollo a la Canasta</strong><p>Especialidad de la casa</p></div></div>
+                <span class="price-tag text-primary">68 <small>uds</small></span>
+              </div>
+              <div class="menu-row">
+                <div class="menu-info"><span class="rank-badge orange">2</span><div><strong>Combo Pecho y Ala</strong><p>Con papas fritas rústicas</p></div></div>
+                <span class="price-tag">42 <small>uds</small></span>
+              </div>
+              <div class="menu-row">
+                <div class="menu-info"><span class="rank-badge dark">3</span><div><strong>Salchipapas Especial</strong><p>Con doble salsa golf</p></div></div>
+                <span class="price-tag">35 <small>uds</small></span>
+              </div>
+              <div class="menu-row">
+                <div class="menu-info"><span class="rank-badge dark">4</span><div><strong>Guarnición Platanitos</strong><p>Porción crocante</p></div></div>
+                <span class="price-tag">28 <small>uds</small></span>
+              </div>
+            </div>
+            <div class="card-bottom-link">
+              <span>Ver carta completa</span>
+              <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Fila de Auditoría y Operación en Mostrador -->
+        <section class="bottom-grid-admin">
+          <div class="audit-card">
+            <div class="card-head">
+              <h2>Operación en Mostrador</h2>
+              <span class="badge-realtime">Tiempo Real</span>
+            </div>
+            <div class="audit-list">
+              <div class="audit-row">
+                <div class="icon-box red"><span class="material-symbols-outlined">timer</span></div>
+                <div><strong>8.5 min promedio despacho</strong><p>Velocidad excelente. Dentro de la meta operativa de 10 min.</p></div>
+              </div>
+              <div class="audit-row">
+                <div class="icon-box orange"><span class="material-symbols-outlined">sentiment_very_satisfied</span></div>
+                <div><strong>0 quejas críticas en el turno</strong><p>Atención en salón y retiro sin contratiempos reportados.</p></div>
+              </div>
+              <div class="audit-row">
+                <div class="icon-box dark"><span class="material-symbols-outlined">inventory_2</span></div>
+                <div><strong>Stock de Pechuga Marinada</strong><p>Quedan 18 kg en antecámara. Suficiente para el turno noche.</p></div>
+              </div>
+            </div>
+            <div class="progress-section">
+              <div class="progress-bar"><div class="fill" style="width: 82%"></div></div>
+              <div class="progress-labels"><span>Rendimiento Turno Tarde</span><strong class="text-primary">82% Capacidad</strong></div>
+            </div>
+          </div>
+
+          <div class="audit-card">
+            <div class="card-head">
+              <h2>Bitácora de Auditoría</h2>
+              <span class="sub-text">Últimos eventos</span>
+            </div>
+            <div class="log-list">
+              <div class="log-item">
+                <div class="log-avatar red">GT</div>
+                <div class="log-details"><strong>Cierre intermedio de caja Mostrador</strong><p>Gerente de Tienda (PIN autoriz.)</p></div>
+                <div class="log-time"><strong>16:42</strong><span class="badge-verif">Verificado</span></div>
+              </div>
+              <div class="log-item">
+                <div class="log-avatar orange">DP</div>
+                <div class="log-details"><strong>Terminal Despacho reactivada</strong><p>Equipo Despacho #1 • Salón</p></div>
+                <div class="log-time"><strong>15:18</strong><span>Automático</span></div>
+              </div>
+              <div class="log-item">
+                <div class="log-avatar dark">AG</div>
+                <div class="log-details"><strong>Ajuste de precio promocional Duo</strong><p>Admin General • Panel</p></div>
+                <div class="log-time"><strong>13:05</strong><span class="badge-crit">Crítico</span></div>
+              </div>
+            </div>
+            <div class="card-bottom-link border-top">
+              <span>Explorar bitácora completa</span>
+              <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,278 @@
+<!-- Carga de Material Symbols Google Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+<div class="cliente-container">
+  <!-- Sidebar Lateral Izquierdo (Cliente) -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="logo-box">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuARWBGOwVyKmeELe4ofi32bTW08sgsveQaHytpMSRrnx9bJo2FzQLqODvvgOcsRyebZmxcCVR6ObyUb-1fca0277X4QOwBHaZlAYzJVfS1jiqm5ZAgRuCxbiKY_7I7UAaVBPujYie71xT_HYTQ16lRB1of70sFmEtJjLZe0o5IREn8-YPQLsW7o12Z1hvW-eZSUYzR7tYzV1aRQ2ox5jyTUW-oX_almiR-fpOZjrmqBfy1ARmpYStRaPAVs5I7nh2b1rA" alt="King Tooky Logo" class="brand-logo">
+        <span class="role-title">Portal de Cliente</span>
+        <span class="panel-subtitle">KING TOOKY</span>
+      </div>
+      <nav class="nav-menu">
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">home</span>
+          <span>Inicio</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">table_restaurant</span>
+          <span>Reservas</span>
+        </a>
+        <a class="nav-item active" href="#">
+          <span class="material-symbols-outlined">receipt_long</span>
+          <span>Tus Comprobantes</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">menu_book</span>
+          <span>Menú de Salón</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">favorite</span>
+          <span>Tus Favoritos</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">help</span>
+          <span>Ayuda</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="material-symbols-outlined">account_circle</span>
+          <span>Mi Perfil</span>
+        </a>
+      </nav>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="user-pill">
+        <div class="avatar">C</div>
+        <div class="user-info">
+          <span class="user-name">Carlos Mendoza</span>
+          <span class="user-email">carlos.m&#64;gmail.com</span>
+        </div>
+      </div>
+      <button class="btn-logout" type="button" (click)="cerrarSesion()">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Cerrar sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <div class="main-wrapper">
+    <!-- Header Superior -->
+    <header class="top-header">
+      <div class="search-box">
+        <span class="material-symbols-outlined">search</span>
+        <input type="search" placeholder="Buscar platos, reservas o comprobantes...">
+      </div>
+      <div class="header-right">
+        <div class="status-badge">
+          <span class="pulse-dot"></span>
+          <span>En Línea</span>
+        </div>
+        <button class="icon-btn" type="button">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notif-dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Canvas Principal -->
+    <main class="dashboard-canvas">
+      <!-- Header de Títulos y Acciones -->
+      <div class="executive-header">
+        <div>
+          <div class="badge-tag">HISTORIAL & DETALLE DE SALÓN</div>
+          <h1 class="page-title">Tus Comprobantes</h1>
+          <p class="page-subtitle">Consulta tus reservaciones activas y pasadas, revisa los comprobantes oficiales de consumo y gestiona tus reservas de mesa en caja.</p>
+        </div>
+        <div class="action-buttons">
+          <button class="btn-filter" type="button">
+            <span class="material-symbols-outlined">filter_list</span>
+            <span>Filtrar Comprobantes</span>
+          </button>
+          <button class="btn-new-res" type="button">
+            <span class="material-symbols-outlined">add_circle</span>
+            <span>Hacer Nueva Reserva</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="canvas-content">
+        <!-- Tarjetas Resumen Superiores -->
+        <section class="summary-grid">
+          <div class="summary-card">
+            <div>
+              <span class="card-title">TOTAL DE RESERVAS REGISTRADAS</span>
+              <div class="card-value">14 Reservas</div>
+              <span class="card-sub text-secondary">Salones King Tooky La Paz</span>
+            </div>
+            <div class="card-icon bg-high"><span class="material-symbols-outlined text-primary">table_restaurant</span></div>
+          </div>
+          <div class="summary-card">
+            <div>
+              <span class="card-title">PRÓXIMA VISITA</span>
+              <div class="card-value text-primary">Hoy, 19:30</div>
+              <span class="card-sub">Mesa #08 • Salón Central (4 personas)</span>
+            </div>
+            <div class="card-icon bg-sec"><span class="material-symbols-outlined text-secondary">alarm_on</span></div>
+          </div>
+        </section>
+
+        <!-- Alerta de Reserva Activa -->
+        <section class="active-alert-banner">
+          <div class="alert-icon-box"><span class="material-symbols-outlined">notification_important</span></div>
+          <div class="alert-content">
+            <div class="alert-tag-row">
+              <span class="pill-orange">Alerta de Reserva Activa</span>
+              <span class="ticket-ref">• Comprobante #TK-9842</span>
+            </div>
+            <h2>Tienes una reserva programada para <span class="highlight">Hoy a las 19:30</span></h2>
+            <p>Recuerda pasar de <strong>5 a 10 minutos antes (19:20 - 19:25)</strong> para realizar el pago en caja y confirmar tu mesa y pedido.</p>
+          </div>
+        </section>
+
+        <!-- Grid Principal (Lista Izquierda y Detalle Comprobante Derecha) -->
+        <section class="comprobantes-grid">
+          <!-- Columna Izquierda: Listado -->
+          <div class="list-column">
+            <div class="list-header">
+              <span class="list-title">Selecciona una Reserva para ver Detalle</span>
+              <span class="list-count">3 Registradas</span>
+            </div>
+
+            <!-- Item 1 (Seleccionado) -->
+            <div class="reserva-item selected">
+              <div class="item-top">
+                <span class="ticket-num text-primary">#TK-9842</span>
+                <span class="pill-active">Seleccionada • Hoy</span>
+              </div>
+              <div class="item-date">Programada para: Hoy, 24 Octubre 2024 a las 19:30</div>
+              <div class="item-created"><span class="material-symbols-outlined">calendar_today</span> Creada el: 23 Octubre, 2024 • 14:10</div>
+              <div class="item-footer">
+                <span>Mesa #08 • 4 Personas</span>
+                <strong class="text-primary">Bs 113.00</strong>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="reserva-item">
+              <div class="item-top">
+                <span class="ticket-num">#TK-8710</span>
+                <span class="pill-done">Cumplida</span>
+              </div>
+              <div class="item-date">Programada para: 18 Octubre 2024 a las 20:00</div>
+              <div class="item-created"><span class="material-symbols-outlined">calendar_today</span> Creada el: 17 Octubre, 2024 • 09:45</div>
+              <div class="item-footer">
+                <span>Mesa #04 • 2 Personas</span>
+                <strong>Bs 78.00</strong>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="reserva-item">
+              <div class="item-top">
+                <span class="ticket-num">#TK-8520</span>
+                <span class="pill-done">Cumplida</span>
+              </div>
+              <div class="item-date">Programada para: 05 Octubre 2024 a las 13:15</div>
+              <div class="item-created"><span class="material-symbols-outlined">calendar_today</span> Creada el: 03 Octubre, 2024 • 16:30</div>
+              <div class="item-footer">
+                <span>Mesa #15 • 5 Personas</span>
+                <strong>Bs 154.00</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Detalle del Comprobante -->
+          <div class="detail-column">
+            <div class="detail-head">
+              <div>
+                <div class="flex-title"><span class="material-symbols-outlined text-primary">receipt_long</span><h2>Comprobante de Salón</h2></div>
+                <p>Detalle oficial de orden y asignación de mesa</p>
+              </div>
+              <div class="text-right">
+                <span class="big-ticket text-primary">#TK-9842</span>
+                <p class="ticket-type">Ticket Electrónico</p>
+              </div>
+            </div>
+
+            <div class="info-grid-box">
+              <div>
+                <span class="label">CLIENTE REGISTRADO</span>
+                <strong>Carlos Mendoza</strong>
+                <p>+591 789-45120</p>
+              </div>
+              <div>
+                <span class="label">ESTADO DE PAGO</span>
+                <strong class="text-secondary flex-center"><span class="dot-sec"></span> Pendiente de pago en caja</strong>
+                <p>Pagar al llegar al salón</p>
+              </div>
+              <div>
+                <span class="label">FECHA Y HORA PACTADA</span>
+                <strong>Hoy, 24 de Octubre de 2024 • 19:30</strong>
+                <p class="text-primary font-bold">Ingreso recomendado: 19:20 a 19:25</p>
+              </div>
+              <div>
+                <span class="label">UBICACIÓN & MESA</span>
+                <strong>Mesa #08 (Salón Central)</strong>
+                <p>Sucursal Central La Paz • 4 Personas</p>
+              </div>
+            </div>
+
+            <div class="dishes-section">
+              <div class="dishes-head">
+                <span class="label text-secondary">DETALLE DE PLATOS Y COMANDA</span>
+                <span class="sub">Subtotal de pedido</span>
+              </div>
+              <div class="dish-list">
+                <div class="dish-row">
+                  <div class="dish-info">
+                    <span class="qty-badge red">1x</span>
+                    <div><strong>Combo Familiar King Tooky (8 presas)</strong><p>Papas rústicas + Salsas tártara y golf</p></div>
+                  </div>
+                  <span class="dish-price">Bs 65.00</span>
+                </div>
+                <div class="dish-row">
+                  <div class="dish-info">
+                    <span class="qty-badge orange">2x</span>
+                    <div><strong>Porción personal de Fideo al Pesto</strong><p>Albahaca fresca y queso criollo rallado</p></div>
+                  </div>
+                  <span class="dish-price">Bs 28.00</span>
+                </div>
+                <div class="dish-row">
+                  <div class="dish-info">
+                    <span class="qty-badge yellow">1x</span>
+                    <div><strong>Jarra 2L Mocochinchi casero helado</strong><p>Con duraznos deshidratados enteros</p></div>
+                  </div>
+                  <span class="dish-price">Bs 20.00</span>
+                </div>
+              </div>
+
+              <div class="total-row">
+                <span>Total a Pagar en Caja:</span>
+                <span class="total-amount text-primary">Bs 113.00</span>
+              </div>
+            </div>
+
+            <div class="detail-actions">
+              <div class="action-btns">
+                <button class="btn-pdf" type="button" onclick="alert('Descargando Comprobante Oficial #TK-9842 en formato PDF...')">
+                  <span class="material-symbols-outlined">picture_as_pdf</span>
+                  <span>Descargar Recibo en PDF</span>
+                </button>
+                <button class="btn-cancel" type="button" onclick="confirm('¿Deseas solicitar reprogramación o cancelación de la reserva #TK-9842?')">
+                  <span class="material-symbols-outlined">edit_calendar</span>
+                  <span>Cancelar o Reprogramar Reserva</span>
+                </button>
+              </div>
+              <div class="notice-box">
+                <span class="material-symbols-outlined text-primary">schedule</span>
+                <span>Nota importante: La reprogramación solo está disponible hasta 1 hora antes de la hora pactada.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
