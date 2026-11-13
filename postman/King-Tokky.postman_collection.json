@@ -1,0 +1,3671 @@
+{
+  "info": {
+    "name": "King Tokky · API",
+    "description": "Colección generada desde los controladores. 1) Ejecuta \"POST /api/auth/login\" (guarda el token solo). 2) Prueba el resto. Cuentas demo (contraseña KingTokky2026*): admin, gerente, despacho, cliente.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
+    },
+    {
+      "key": "id",
+      "value": "1"
+    },
+    {
+      "key": "idInsumo",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Archivos",
+      "item": [
+        {
+          "name": "GET /api/archivos/fotos/{{nombre}} · Devuelve una foto de perfil",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/archivos/fotos/{{nombre}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "archivos",
+                "fotos",
+                "{{nombre}}"
+              ],
+              "query": []
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Autenticación",
+      "item": [
+        {
+          "name": "POST /api/auth/login · Inicia sesión con usuario o correo y contraseña (opción «Recordarme» e",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"cliente\",\n  \"contrasena\": \"KingTokky2026*\",\n  \"recordarme\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "pm.collectionVariables.set(\"token\", r.accessToken);",
+                  "pm.collectionVariables.set(\"refreshToken\", r.refreshToken);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST /api/auth/register · Registra un cliente nuevo y abre su sesión",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"nuevo.cliente\",\n  \"nombreCompleto\": \"Nuevo Cliente\",\n  \"correo\": \"nuevo@correo.com\",\n  \"contrasena\": \"Clave123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "POST /api/auth/google · Inicia sesión con una cuenta de Google (envía el ID token que entrega ",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/google",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "google"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idToken\": \"ID_TOKEN_DE_GOOGLE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "POST /api/auth/refresh · Cambia un refresh token por un nuevo par de tokens",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/refresh",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "refresh"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "pm.collectionVariables.set(\"token\", r.accessToken);",
+                  "pm.collectionVariables.set(\"refreshToken\", r.refreshToken);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST /api/auth/logout · Cierra la sesión revocando el refresh token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "logout"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "POST /api/auth/olvide-contrasena · Envía por correo un enlace para restablecer la contraseña",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/olvide-contrasena",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "olvide-contrasena"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"valeria.mendoza@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "POST /api/auth/restablecer-contrasena · Define una nueva contraseña con el token recibido por correo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/restablecer-contrasena",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "restablecer-contrasena"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"TOKEN_DEL_CORREO\",\n  \"nuevaContrasena\": \"NuevaClave123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "GET /api/auth/me · Datos del usuario autenticado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bitácora de auditoría",
+      "item": [
+        {
+          "name": "GET /api/bitacora · Eventos con filtros: categoria (TODOS, SEGURIDAD, ANULACIONES, PERMISO",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bitacora",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bitacora"
+              ],
+              "query": [
+                {
+                  "key": "categoria",
+                  "value": "TODOS",
+                  "disabled": true
+                },
+                {
+                  "key": "actor",
+                  "value": "TODOS",
+                  "disabled": true
+                },
+                {
+                  "key": "desde",
+                  "value": "2026-10-01",
+                  "disabled": true
+                },
+                {
+                  "key": "hasta",
+                  "value": "2026-11-07",
+                  "disabled": true
+                },
+                {
+                  "key": "q",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "25",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/bitacora/resumen · Tarjetas: eventos de hoy, accesos y sesiones, suspensiones y ajustes d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bitacora/resumen",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bitacora",
+                "resumen"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/bitacora/exportar · Exporta los eventos filtrados a csv o pdf (hasta 5.000 registros)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bitacora/exportar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bitacora",
+                "exportar"
+              ],
+              "query": [
+                {
+                  "key": "formato",
+                  "value": "xlsx",
+                  "disabled": true
+                },
+                {
+                  "key": "categoria",
+                  "value": "TODOS",
+                  "disabled": true
+                },
+                {
+                  "key": "actor",
+                  "value": "TODOS",
+                  "disabled": true
+                },
+                {
+                  "key": "desde",
+                  "value": "2026-10-01",
+                  "disabled": true
+                },
+                {
+                  "key": "hasta",
+                  "value": "2026-11-07",
+                  "disabled": true
+                },
+                {
+                  "key": "q",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Caja",
+      "item": [
+        {
+          "name": "GET /api/caja/cierres · Cierres de caja de un día (hoy por defecto)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/caja/cierres",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "caja",
+                "cierres"
+              ],
+              "query": [
+                {
+                  "key": "fecha",
+                  "value": "2026-11-07",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/caja/cierres · Registra un cierre de caja con las ventas acumuladas del día",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/caja/cierres",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "caja",
+                "cierres"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"INTERMEDIO\",\n  \"observacion\": \"Cambio de turno\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Portal del cliente",
+      "item": [
+        {
+          "name": "GET /api/cliente/menu-salon · Menú del salón: lo de PedidosYA más platos exclusivos, con corazón y v",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cliente/menu-salon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cliente",
+                "menu-salon"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/cliente/favoritos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cliente/favoritos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cliente",
+                "favoritos"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/cliente/favoritos/{{id}}/me-gusta · Alterna el corazón de un producto",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cliente/favoritos/{{id}}/me-gusta",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cliente",
+                "favoritos",
+                "{{id}}",
+                "me-gusta"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/cliente/quejas · Envía una sugerencia, queja o felicitación (con número de pedido y val",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cliente/quejas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cliente",
+                "quejas"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"SUGERENCIA\",\n  \"categoria\": \"COMIDA\",\n  \"numeroPedido\": null,\n  \"valoracion\": 5,\n  \"mensaje\": \"Sería genial tener salsa picante extra.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /api/cliente/quejas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cliente/quejas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cliente",
+                "quejas"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/cliente/evaluacion · Califica el día de 1 a 5 estrellas (una vez por día; se puede corregir",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cliente/evaluacion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cliente",
+                "evaluacion"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estrellas\": 5,\n  \"comentario\": \"Todo excelente\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /api/cliente/evaluacion/hoy · Mi evaluación de hoy, o vacío si todavía no califiqué",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cliente/evaluacion/hoy",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cliente",
+                "evaluacion",
+                "hoy"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/cliente/ayuda · Pasos para reservar y contacto de WhatsApp corporativo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cliente/ayuda",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cliente",
+                "ayuda"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboards",
+      "item": [
+        {
+          "name": "GET /api/dashboard/gerente · Dashboard del gerente: ventas, pedidos, stock crítico, ventas por cate",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard/gerente",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "dashboard",
+                "gerente"
+              ],
+              "query": [
+                {
+                  "key": "fecha",
+                  "value": "2026-11-07",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/dashboard/admin · Dashboard del administrador: ventas totales, margen, ritmo por hora, t",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard/admin",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "dashboard",
+                "admin"
+              ],
+              "query": [
+                {
+                  "key": "fecha",
+                  "value": "2026-11-07",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/dashboard/admin/exportar · Descarga el resumen diario en PDF",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard/admin/exportar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "dashboard",
+                "admin",
+                "exportar"
+              ],
+              "query": [
+                {
+                  "key": "fecha",
+                  "value": "2026-11-07",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Entrevistas y selección",
+      "item": [
+        {
+          "name": "GET /api/entrevistas/agenda · Agenda: entrevistas de hoy con cuenta regresiva, próximas citas y tarj",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/entrevistas/agenda",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "entrevistas",
+                "agenda"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/entrevistas/resumen",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/entrevistas/resumen",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "entrevistas",
+                "resumen"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/entrevistas/vacantes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/entrevistas/vacantes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "entrevistas",
+                "vacantes"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/entrevistas · Agenda una entrevista (presencial, virtual o telefónica)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/entrevistas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "entrevistas"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idPostulante\": 7,\n  \"fechaHora\": \"2026-11-12T10:00:00\",\n  \"modalidad\": \"PRESENCIAL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT /api/entrevistas/{{id}}/observaciones · Guarda observaciones; «realizada» cierra la entrevista y «aprobar» da ",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/entrevistas/{{id}}/observaciones",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "entrevistas",
+                "{{id}}",
+                "observaciones"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"observaciones\": \"Buena actitud y experiencia.\",\n  \"evaluacionGerente\": \"Recomendado\",\n  \"realizada\": true,\n  \"aprobar\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /api/postulantes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/postulantes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "postulantes"
+              ],
+              "query": [
+                {
+                  "key": "idVacante",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "estado",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/postulantes/{{id}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/postulantes/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "postulantes",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/postulantes",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/postulantes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "postulantes"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreCompleto\": \"Carla Fernández Luna\",\n  \"telefono\": \"71234599\",\n  \"correo\": \"carla@correo.com\",\n  \"idVacante\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /api/postulantes/{{id}}/documentos · Sube un documento del postulante: CV, CARNET o ANTECEDENTES (PDF/PNG/J",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/postulantes/{{id}}/documentos?tipo=CV",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "postulantes",
+                "{{id}}",
+                "documentos"
+              ],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "CV",
+                  "disabled": false
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "archivo",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/postulantes/documentos/{{id}}/descargar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/postulantes/documentos/{{id}}/descargar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "postulantes",
+                "documentos",
+                "{{id}}",
+                "descargar"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/postulantes/{{id}}/cv · Descarga el CV del postulante",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/postulantes/{{id}}/cv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "postulantes",
+                "{{id}}",
+                "cv"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/entrevistados/resumen · Tarjetas del administrador: postulantes del ciclo, visto bueno gerenci",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/entrevistados/resumen",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "entrevistados",
+                "resumen"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/entrevistados/{{id}}/contratar · Aprobación definitiva: crea al empleado. Exige visto bueno del gerente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/entrevistados/{{id}}/contratar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "entrevistados",
+                "{{id}}",
+                "contratar"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"turno\": \"MANANA\",\n  \"salario\": 3000,\n  \"idEstacion\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /api/entrevistados/{{id}}/descartar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/entrevistados/{{id}}/descartar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "entrevistados",
+                "{{id}}",
+                "descartar"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"No cumple el perfil\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /api/entrevistados/exportar · Informe de selección de personal en csv, xlsx o pdf",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/entrevistados/exportar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "entrevistados",
+                "exportar"
+              ],
+              "query": [
+                {
+                  "key": "formato",
+                  "value": "xlsx",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tiempo real",
+      "item": [
+        {
+          "name": "GET /api/stream/comandas · SSE de comandas: pedido-creado, pedido-listo, pedido-actualizado y tim",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/stream/comandas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "stream",
+                "comandas"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Inventario",
+      "item": [
+        {
+          "name": "GET /api/inventario · Insumos con estado (CRITICO/BAJO/NORMAL), consumo de hoy y proyección ",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "categoria",
+                  "value": "TODOS",
+                  "disabled": true
+                },
+                {
+                  "key": "tipo",
+                  "value": "ALIMENTO",
+                  "disabled": true
+                },
+                {
+                  "key": "estado",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/inventario/resumen · Tarjetas: alertas urgentes, abastecimiento, valoración del inventario ",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/resumen",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "resumen"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/inventario/categorias",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/categorias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "categorias"
+              ],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "ALIMENTO",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/inventario/proveedores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/proveedores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "proveedores"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/inventario/alertas · Alertas de stock abiertas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/alertas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "alertas"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/inventario/movimientos · Kardex: entradas, consumos, mermas y ajustes (de un insumo o de todos)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/movimientos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "movimientos"
+              ],
+              "query": [
+                {
+                  "key": "idInsumo",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/inventario/entradas · Registra una entrada de mercadería",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/entradas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "entradas"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idInsumo\": 1,\n  \"cantidad\": 50,\n  \"idProveedor\": 1,\n  \"costoUnitario\": 14,\n  \"documento\": \"FAC-00123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /api/inventario/mermas · Historial de mermas (últimos 30 días por defecto)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/mermas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "mermas"
+              ],
+              "query": [
+                {
+                  "key": "desde",
+                  "value": "2026-10-01",
+                  "disabled": true
+                },
+                {
+                  "key": "hasta",
+                  "value": "2026-11-07",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/inventario/mermas · Registra una merma (descuenta stock, la valora y la deja en el kardex)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/mermas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "mermas"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idInsumo\": 26,\n  \"cantidad\": 2,\n  \"motivo\": \"DETERIORO\",\n  \"observacion\": \"Papa en mal estado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /api/inventario/exportar · Descarga el inventario en csv, xlsx o pdf",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/exportar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "exportar"
+              ],
+              "query": [
+                {
+                  "key": "formato",
+                  "value": "xlsx",
+                  "disabled": true
+                },
+                {
+                  "key": "tipo",
+                  "value": "ALIMENTO",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/inventario/mermas/exportar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/mermas/exportar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "mermas",
+                "exportar"
+              ],
+              "query": [
+                {
+                  "key": "formato",
+                  "value": "xlsx",
+                  "disabled": true
+                },
+                {
+                  "key": "desde",
+                  "value": "2026-10-01",
+                  "disabled": true
+                },
+                {
+                  "key": "hasta",
+                  "value": "2026-11-07",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/inventario/controles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/controles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "controles"
+              ],
+              "query": [
+                {
+                  "key": "limite",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/inventario/controles/programacion · Próximo control semanal (sábado) y quincenal (días 15 y 30)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/controles/programacion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "controles",
+                "programacion"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/inventario/controles/{{id}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/controles/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "controles",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/inventario/controles · Abre un control semanal (alimentos) o quincenal (utensilios, mesas y v",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/controles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "controles"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"SEMANAL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT /api/inventario/controles/{{id}}/conteo · Guarda lo contado físicamente; calcula la diferencia contra el sistema",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/controles/{{id}}/conteo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "controles",
+                "{{id}}",
+                "conteo"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineas\": [\n    {\n      \"idInsumo\": 1,\n      \"stockContado\": 150\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /api/inventario/controles/{{id}}/cerrar · Cierra el control y aplica las diferencias como ajustes de inventario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventario/controles/{{id}}/cerrar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inventario",
+                "controles",
+                "{{id}}",
+                "cerrar"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Despacho y comandas",
+      "item": [
+        {
+          "name": "GET /api/pedidos · Pedidos de una fecha (hoy por defecto), opcionalmente filtrados por es",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pedidos"
+              ],
+              "query": [
+                {
+                  "key": "fecha",
+                  "value": "2026-11-07",
+                  "disabled": true
+                },
+                {
+                  "key": "estado",
+                  "value": "LISTO",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/pedidos/comandas · Tablero de despacho: comandas en preparación y listas, con tiempo prom",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos/comandas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pedidos",
+                "comandas"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/pedidos/{{id}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pedidos",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/pedidos · Registra un pedido; asigna el siguiente número de turno del día y desc",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pedidos"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoPedido\": \"LOCAL\",\n  \"idUsuarioCliente\": null,\n  \"items\": [\n    {\n      \"idProducto\": 1,\n      \"cantidad\": 2,\n      \"observaciones\": \"Sin ensalada\"\n    },\n    {\n      \"idProducto\": 28,\n      \"cantidad\": 2\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/pedidos/{{id}}/estado · Cambia el estado respetando el ciclo EN_PREPARACION → LISTO → ENTREGAD",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos/{{id}}/estado?estado=LISTO",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pedidos",
+                "{{id}}",
+                "estado"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "LISTO",
+                  "disabled": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/pedidos/{{id}}/listo · Marca el pedido como listo (dispara el aviso sonoro en las pantallas c",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos/{{id}}/listo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pedidos",
+                "{{id}}",
+                "listo"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/pedidos/{{id}}/entregar",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos/{{id}}/entregar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pedidos",
+                "{{id}}",
+                "entregar"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/pedidos/{{id}}/cancelar · Anula una comanda en preparación (queda registrada en la bitácora)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos/{{id}}/cancelar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pedidos",
+                "{{id}}",
+                "cancelar"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Cliente se retiró\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /api/pedidos/{{id}}/timbre · Toca el timbre para llamar al cliente de un pedido listo",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos/{{id}}/timbre",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pedidos",
+                "{{id}}",
+                "timbre"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Perfil",
+      "item": [
+        {
+          "name": "GET /api/perfil · Mi perfil, con fecha de ingreso, último acceso y frecuencia de visitas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/perfil",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "perfil"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "PUT /api/perfil · Actualiza mi nombre, correo y foto (URL)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/perfil",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "perfil"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreCompleto\": \"Valeria Mendoza Arce\",\n  \"correo\": \"valeria.mendoza@gmail.com\",\n  \"fotoUrl\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /api/perfil/contrasena · Cambia mi contraseña",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/perfil/contrasena",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "perfil",
+                "contrasena"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contrasenaActual\": \"KingTokky2026*\",\n  \"nuevaContrasena\": \"OtraClave123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /api/perfil/foto · Sube mi foto de perfil (PNG, JPG o WEBP, máximo 5 MB; campo «foto»)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/perfil/foto",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "perfil",
+                "foto"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "foto",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Roles y personal",
+      "item": [
+        {
+          "name": "GET /api/personal/resumen · Tarjetas: total de empleados, perfiles creados, turno actual y ocupaci",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/personal/resumen",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "personal",
+                "resumen"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/personal · Personal registrado; filtros por texto, rol (ROL-ADMIN, ROL-GERENTE, R",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/personal",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "personal"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "rol",
+                  "value": "ROL-DESPACHO",
+                  "disabled": true
+                },
+                {
+                  "key": "turno",
+                  "value": "MANANA",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/personal/estaciones · Estaciones operativas: puestos totales, ocupados (%) y quién ocupa cad",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/personal/estaciones",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "personal",
+                "estaciones"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/personal/perfiles · Crea el perfil de acceso de un colaborador; si no se envía contraseña ",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/personal/perfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "personal",
+                "perfiles"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"despacho3\",\n  \"correo\": \"despacho3@kingtokky.bo\",\n  \"nombreCompleto\": \"Nuevo Despachador\",\n  \"rolCodigo\": \"ROL-DESPACHO\",\n  \"contrasena\": null,\n  \"idEmpleado\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /api/personal/empleados · Asigna (registra) un empleado nuevo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/personal/empleados",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "personal",
+                "empleados"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreCompleto\": \"Nuevo Empleado\",\n  \"cargo\": \"Cocinero\",\n  \"turno\": \"MANANA\",\n  \"salario\": 3000,\n  \"idEstacion\": 2,\n  \"telefono\": \"70000000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT /api/personal/{{id}}",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/personal/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "personal",
+                "{{id}}"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cargo\": \"Cocinero senior\",\n  \"turno\": \"TARDE\",\n  \"salario\": 3400,\n  \"idEstacion\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT /api/personal/{{id}}/rol · Editar rol: los cambios de nivel 1 y 2 quedan como eventos críticos en",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/personal/{{id}}/rol",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "personal",
+                "{{id}}",
+                "rol"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rolCodigo\": \"ROL-GERENTE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/personal/{{id}}/suspender",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/personal/{{id}}/suspender",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "personal",
+                "{{id}}",
+                "suspender"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Incumplimiento de turno\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/personal/{{id}}/reactivar",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/personal/{{id}}/reactivar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "personal",
+                "{{id}}",
+                "reactivar"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/personal/exportar · Nómina del personal en csv, xlsx o pdf",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/personal/exportar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "personal",
+                "exportar"
+              ],
+              "query": [
+                {
+                  "key": "formato",
+                  "value": "xlsx",
+                  "disabled": true
+                },
+                {
+                  "key": "rol",
+                  "value": "ROL-DESPACHO",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/roles · Roles con su nivel de seguridad, usuarios activos y permisos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "roles"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/roles/permisos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/roles/permisos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                "permisos"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/roles/{{id}}/usuarios · Usuarios que tienen el rol",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/roles/{{id}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                "{{id}}",
+                "usuarios"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "PUT /api/roles/{{id}}/permisos · Reemplaza los permisos de un rol (evento crítico en la bitácora)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/roles/{{id}}/permisos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                "{{id}}",
+                "permisos"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"permisos\": [\n    \"PEDIDO_LEER\",\n    \"PEDIDO_CREAR\",\n    \"PEDIDO_ESTADO\",\n    \"PRODUCTO_LEER\",\n    \"RESERVA_GESTIONAR\",\n    \"CAJA_CIERRE\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /api/usuarios · Usuarios del sistema; estado 1 = activo, 0 = inactivo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "estado",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/usuarios/{{id}}/activar",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{id}}/activar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios",
+                "{{id}}",
+                "activar"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/usuarios/{{id}}/desactivar",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{id}}/desactivar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "usuarios",
+                "{{id}}",
+                "desactivar"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Menú y productos",
+      "item": [
+        {
+          "name": "GET /api/productos · Lista paginada de productos con filtros por nombre, categoría y dispon",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/productos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "categoria",
+                  "value": "TODOS",
+                  "disabled": true
+                },
+                {
+                  "key": "disponible",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/productos/categorias",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/productos/categorias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "categorias"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/productos/{{id}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/productos/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/productos",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/productos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Combo Nuevo\",\n  \"descripcion\": \"Descripción del combo\",\n  \"precio\": 35,\n  \"categoria\": \"COMBOS_POPULARES\",\n  \"imagenUrl\": null,\n  \"disponible\": true,\n  \"publicadoPedidosYa\": true,\n  \"enSalon\": true,\n  \"costo\": 15\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT /api/productos/{{id}} · Edita un producto; si cambia el precio queda como «ajuste de precio» e",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/productos/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "{{id}}"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Combo Nuevo\",\n  \"descripcion\": \"Descripción del combo\",\n  \"precio\": 35,\n  \"categoria\": \"COMBOS_POPULARES\",\n  \"imagenUrl\": null,\n  \"disponible\": true,\n  \"publicadoPedidosYa\": true,\n  \"enSalon\": true,\n  \"costo\": 15\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/productos/{{id}}/disponibilidad · Marca un producto como disponible o agotado",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/productos/{{id}}/disponibilidad?disponible=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "{{id}}",
+                "disponibilidad"
+              ],
+              "query": [
+                {
+                  "key": "disponible",
+                  "value": "true",
+                  "disabled": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/productos/{{id}}/publicacion · Publica o retira un producto del menú de PedidosYA",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/productos/{{id}}/publicacion?publicado=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "{{id}}",
+                "publicacion"
+              ],
+              "query": [
+                {
+                  "key": "publicado",
+                  "value": "true",
+                  "disabled": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /api/productos/{{id}}",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/productos/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sitio público",
+      "item": [
+        {
+          "name": "GET /api/publico/inicio · Portada: producto más vendido, horarios y ubicación",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/publico/inicio",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "publico",
+                "inicio"
+              ],
+              "query": []
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "GET /api/publico/menu · Menú de PedidosYA por categorías, indicando qué está disponible hoy",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/publico/menu",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "publico",
+                "menu"
+              ],
+              "query": []
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "GET /api/publico/horarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/publico/horarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "publico",
+                "horarios"
+              ],
+              "query": []
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "GET /api/publico/ubicacion",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/publico/ubicacion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "publico",
+                "ubicacion"
+              ],
+              "query": []
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "GET /api/publico/sobre-nosotros",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/publico/sobre-nosotros",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "publico",
+                "sobre-nosotros"
+              ],
+              "query": []
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "GET /api/publico/turnos · Números de turno en preparación y listos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/publico/turnos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "publico",
+                "turnos"
+              ],
+              "query": []
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "GET /api/publico/eventos · Flujo en tiempo real (SSE): turnos-actualizados, timbre y menu-actuali",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/publico/eventos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "publico",
+                "eventos"
+              ],
+              "query": []
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Quejas y sugerencias (gerente)",
+      "item": [
+        {
+          "name": "GET /api/quejas · Mensajes de clientes filtrados por tipo (RECLAMO, SUGERENCIA, FELICITA",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/quejas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "quejas"
+              ],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "SEMANAL",
+                  "disabled": true
+                },
+                {
+                  "key": "desde",
+                  "value": "2026-10-01",
+                  "disabled": true
+                },
+                {
+                  "key": "hasta",
+                  "value": "2026-11-07",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/quejas/resumen · Recibidas del mes, tiempo promedio de despacho vs. objetivo y satisfac",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/quejas/resumen",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "quejas",
+                "resumen"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/quejas/{{id}}/responder",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/quejas/{{id}}/responder",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "quejas",
+                "{{id}}",
+                "responder"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"respuesta\": \"Gracias por escribirnos, lo tendremos en cuenta.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/quejas/{{id}}/revision · Marca el mensaje como «en revisión»",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/quejas/{{id}}/revision",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "quejas",
+                "{{id}}",
+                "revision"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/quejas/exportar · Descarga el informe de quejas y sugerencias en csv, xlsx o pdf",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/quejas/exportar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "quejas",
+                "exportar"
+              ],
+              "query": [
+                {
+                  "key": "formato",
+                  "value": "xlsx",
+                  "disabled": true
+                },
+                {
+                  "key": "tipo",
+                  "value": "SEMANAL",
+                  "disabled": true
+                },
+                {
+                  "key": "desde",
+                  "value": "2026-10-01",
+                  "disabled": true
+                },
+                {
+                  "key": "hasta",
+                  "value": "2026-11-07",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reportes y respaldos",
+      "item": [
+        {
+          "name": "GET /api/reportes/resumen · Reporte financiero del mes (YYYY-MM): ingresos, margen, desperdicio, c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reportes/resumen",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reportes",
+                "resumen"
+              ],
+              "query": [
+                {
+                  "key": "mes",
+                  "value": "2026-10",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/reportes/exportar/excel · Descarga el reporte del mes en Excel",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reportes/exportar/excel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reportes",
+                "exportar",
+                "excel"
+              ],
+              "query": [
+                {
+                  "key": "mes",
+                  "value": "2026-10",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/reportes/imprimible · Descarga el reporte del mes en PDF listo para imprimir",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reportes/imprimible",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reportes",
+                "imprimible"
+              ],
+              "query": [
+                {
+                  "key": "mes",
+                  "value": "2026-10",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/reportes/archivos · Archivo de informes oficiales (incluye los programados)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reportes/archivos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reportes",
+                "archivos"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/reportes/archivos/resumen",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reportes/archivos/resumen",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reportes",
+                "archivos",
+                "resumen"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "POST /api/reportes/archivos · Genera un informe y lo archiva. tipo: VENTAS_MENSUAL, INVENTARIO, AUDI",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reportes/archivos?tipo=VENTAS_MENSUAL",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reportes",
+                "archivos"
+              ],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "VENTAS_MENSUAL",
+                  "disabled": false
+                },
+                {
+                  "key": "formato",
+                  "value": "xlsx",
+                  "disabled": true
+                },
+                {
+                  "key": "periodo",
+                  "value": "2026-10",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/reportes/archivos/{{id}}/descargar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reportes/archivos/{{id}}/descargar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reportes",
+                "archivos",
+                "{{id}}",
+                "descargar"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/respaldos · Historial de respaldos (automáticos cada 12 horas y manuales)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/respaldos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "respaldos"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/respaldos · Ejecuta un respaldo ahora mismo",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/respaldos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "respaldos"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/respaldos/{{id}}/descargar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/respaldos/{{id}}/descargar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "respaldos",
+                "{{id}}",
+                "descargar"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reservas",
+      "item": [
+        {
+          "name": "GET /api/reservas/dias · Paso 1: días de la semana disponibles para reservar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/dias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas",
+                "dias"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/reservas/horarios · Paso 2: horas del día elegido con su cupo restante",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/horarios?fecha=2026-11-07",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas",
+                "horarios"
+              ],
+              "query": [
+                {
+                  "key": "fecha",
+                  "value": "2026-11-07",
+                  "disabled": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/reservas · Paso 3: confirma la reserva con los platos elegidos (queda pendiente d",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreCliente\": \"Valeria Mendoza\",\n  \"telefono\": \"70012345\",\n  \"correo\": \"valeria.mendoza@gmail.com\",\n  \"fecha\": \"2026-11-10\",\n  \"hora\": \"20:00\",\n  \"personas\": 4,\n  \"notas\": \"Cumpleaños\",\n  \"items\": [\n    {\n      \"idProducto\": 2,\n      \"cantidad\": 1\n    },\n    {\n      \"idProducto\": 29,\n      \"cantidad\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /api/reservas/mis · Mis reservas, con filtro opcional por estado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/mis",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas",
+                "mis"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/reservas/mis/resumen · Resumen para el inicio del cliente: total de reservas, próxima visita ",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/mis/resumen",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas",
+                "mis",
+                "resumen"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/reservas/{{id}}/reprogramar · Cambia fecha y hora (solo reservas pendientes de pago, con al menos 60",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/{{id}}/reprogramar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas",
+                "{{id}}",
+                "reprogramar"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2026-11-11\",\n  \"hora\": \"19:30\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/reservas/{{id}}/cancelar",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/{{id}}/cancelar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas",
+                "{{id}}",
+                "cancelar"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/reservas/{{id}}/recibo · Descarga el recibo de la reserva en PDF",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/{{id}}/recibo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas",
+                "{{id}}",
+                "recibo"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/reservas/{{id}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/reservas · Todas las reservas del local, filtradas por estado y fecha",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "fecha",
+                  "value": "2026-11-07",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/reservas/{{id}}/pagar · Registra el pago en caja y envía los platos a cocina como comanda",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/{{id}}/pagar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas",
+                "{{id}}",
+                "pagar"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/reservas/{{id}}/completar",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/{{id}}/completar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservas",
+                "{{id}}",
+                "completar"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

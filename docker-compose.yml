@@ -1,0 +1,85 @@
+# King Tokky · todo el sistema con un solo comando:  docker compose up --build
+#
+#   Base de datos .... PostgreSQL 16 (se crea y se puebla sola con los scripts de ./init)
+#   Backend .......... Spring Boot 3 / Java 21   → http://localhost:8080  (Swagger: /swagger-ui.html)
+#   Correo de pruebas  Mailpit                  → http://localhost:8025  (aquí llegan los correos de recuperación)
+#   pgAdmin (opcional) docker compose --profile tools up → http://localhost:5050
+name: king-tokky
+
+services:
+  db:
+    image: postgres:16
+    container_name: kingtokky-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-king_tokky}
+      POSTGRES_USER: ${DB_USER:-kingtokky}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-kingtokky}
+      TZ: America/La_Paz
+      PGTZ: America/La_Paz
+    ports:
+        - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Los .sql de esta carpeta se ejecutan en orden alfabético SOLO la primera vez (cuando el volumen está vacío)
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-kingtokky} -d ${DB_NAME:-king_tokky}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: kingtokky-mail
+    restart: unless-stopped
+    ports:
+      - "8025:8025"   # bandeja web
+      - "1025:1025"   # SMTP
+
+  backend:
+    build: ./backend
+    container_name: kingtokky-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    environment:
+      TZ: America/La_Paz
+      url: ${DB_URL:jdbc:postgresql://localhost:5433/king_tokky}
+      DB_USER: ${DB_USER:-kingtokky}
+      DB_PASSWORD: ${DB_PASSWORD:-kingtokky}
+      JWT_SECRETO: ${JWT_SECRETO:-king-tokky-clave-de-desarrollo-cambiar-en-produccion-2026}
+      CORS_ORIGENES: ${CORS_ORIGENES:-http://localhost:4200,http://127.0.0.1:4200}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:4200}
+      URL_PUBLICA_BASE: ${URL_PUBLICA_BASE:-http://localhost:8080}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      MAIL_HOST: mailpit
+      MAIL_PORT: 1025
+      DIRECTORIO_ARCHIVOS: /app/data/archivos
+      DIRECTORIO_RESPALDOS: /app/data/respaldos
+    ports:
+      - "8080:8080"
+    volumes:
+      - archivos:/app/data/archivos
+      - respaldos:/app/data/respaldos
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: kingtokky-pgadmin
+    profiles: ["tools"]
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@kingtokky.bo
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
+  archivos:
+  respaldos:

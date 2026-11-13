@@ -1,0 +1,41 @@
+-- Rollback del esquema King Tokky. NO se ejecuta automáticamente (Postgres solo lee los .sql de /init).
+-- Uso manual:  docker compose exec -T db psql -U kingtokky -d king_tokky < init/rollback/rollback.sql
+
+DROP TABLE IF EXISTS cierre_caja CASCADE;
+DROP TABLE IF EXISTS horario_atencion CASCADE;
+DROP TABLE IF EXISTS configuracion_local CASCADE;
+DROP TABLE IF EXISTS respaldo CASCADE;
+DROP TABLE IF EXISTS reporte_generado CASCADE;
+DROP TABLE IF EXISTS bitacora CASCADE;
+DROP TABLE IF EXISTS postulante_documento CASCADE;
+DROP TABLE IF EXISTS entrevista CASCADE;
+DROP TABLE IF EXISTS postulante CASCADE;
+DROP TABLE IF EXISTS vacante CASCADE;
+DROP TABLE IF EXISTS evaluacion_diaria CASCADE;
+DROP TABLE IF EXISTS queja CASCADE;
+DROP TABLE IF EXISTS detalle_pedido CASCADE;
+DROP TABLE IF EXISTS pedido CASCADE;
+DROP TABLE IF EXISTS reserva_detalle CASCADE;
+DROP TABLE IF EXISTS reserva CASCADE;
+DROP TABLE IF EXISTS contador_turno CASCADE;
+DROP TABLE IF EXISTS control_inventario_detalle CASCADE;
+DROP TABLE IF EXISTS control_inventario CASCADE;
+DROP TABLE IF EXISTS alerta_stock CASCADE;
+DROP TABLE IF EXISTS merma CASCADE;
+DROP TABLE IF EXISTS movimiento_inventario CASCADE;
+DROP TABLE IF EXISTS favorito CASCADE;
+DROP TABLE IF EXISTS receta_insumo CASCADE;
+DROP TABLE IF EXISTS insumo CASCADE;
+DROP TABLE IF EXISTS proveedor CASCADE;
+DROP TABLE IF EXISTS categoria_insumo CASCADE;
+DROP TABLE IF EXISTS producto CASCADE;
+DROP TABLE IF EXISTS categoria_producto CASCADE;
+DROP TABLE IF EXISTS empleado CASCADE;
+DROP TABLE IF EXISTS estacion_operativa CASCADE;
+DROP TABLE IF EXISTS acceso_usuario CASCADE;
+DROP TABLE IF EXISTS token_recuperacion CASCADE;
+DROP TABLE IF EXISTS refresh_token CASCADE;
+DROP TABLE IF EXISTS usuario CASCADE;
+DROP TABLE IF EXISTS permiso CASCADE;
+DROP TABLE IF EXISTS rol_permiso CASCADE;
+DROP TABLE IF EXISTS rol CASCADE;

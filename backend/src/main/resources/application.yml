@@ -1,0 +1,83 @@
+server:
+  port: 8080
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: king-tokky-backend
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/king_tokky}
+    username: ${DB_USER:kingtokky}
+    password: ${DB_PASSWORD:kingtokky}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate          # el esquema lo crean los scripts de /init; Hibernate solo lo verifica
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: America/La_Paz
+  flyway:
+    enabled: true
+    baseline-on-migrate: true     # el esquema base (V1) lo crea Docker con /init; Flyway versiona los cambios posteriores
+    baseline-version: 1
+    locations: classpath:db/migration
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    username: ${MAIL_USER:}
+    password: ${MAIL_PASSWORD:}
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  jackson:
+    time-zone: America/La_Paz
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  health:
+    mail:
+      enabled: false
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+
+kingtokky:
+  jwt:
+    # Debe tener al menos 32 caracteres. Cámbialo en producción (variable JWT_SECRETO).
+    secreto: ${JWT_SECRETO:king-tokky-clave-de-desarrollo-cambiar-en-produccion-2026}
+    acceso-minutos: ${JWT_ACCESO_MINUTOS:30}
+    refresh-dias: 1
+    refresh-recordarme-dias: 30
+  cors:
+    origenes-permitidos: ${CORS_ORIGENES:http://localhost:4200,http://127.0.0.1:4200}
+  frontend:
+    url: ${FRONTEND_URL:http://localhost:4200}
+  google:
+    client-id: ${GOOGLE_CLIENT_ID:}
+  almacenamiento:
+    directorio: ${DIRECTORIO_ARCHIVOS:./data/archivos}
+    url-publica-base: ${URL_PUBLICA_BASE:http://localhost:8080}
+  respaldo:
+    habilitado: ${RESPALDO_HABILITADO:true}
+    directorio: ${DIRECTORIO_RESPALDOS:./data/respaldos}
+  reservas:
+    anticipacion-minima-min: 30
+    dias-max-anticipacion: 7
+    limite-reprogramar-min: 60
+    hora-inicio: "11:00"
+    hora-fin: "21:00"
+    paso-minutos: 30
+    max-pendientes-por-cliente: 3
+  inventario:
+    dias-proyeccion: 7
+    factor-stock-bajo: 1.2
