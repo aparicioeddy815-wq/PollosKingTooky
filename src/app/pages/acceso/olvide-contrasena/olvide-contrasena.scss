@@ -1,0 +1,21 @@
+:host ::ng-deep .boton-ancho {
+  width: 100%;
+}
+
+.confirmacion {
+  display: flex;
+  gap: 0.6rem;
+  padding: 1rem;
+  border-radius: var(--kt-radio-chico);
+  background: var(--kt-tertiary-95);
+  color: var(--kt-tertiary-20);
+
+  i {
+    margin-top: 0.2rem;
+  }
+}
+
+.pie {
+  margin-top: 1.5rem;
+  text-align: center;
+}

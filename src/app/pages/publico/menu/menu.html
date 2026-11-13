@@ -1,0 +1,52 @@
+<div class="pagina">
+  <header class="cabecera-pagina">
+    <h1>Nuestro menú</h1>
+    <p>Elige una categoría y mira lo que tenemos hoy. Los precios están en bolivianos.</p>
+  </header>
+
+  @if (cargando()) {
+    <div class="rejilla">
+      @for (n of [1, 2, 3, 4, 5, 6]; track n) {
+        <p-skeleton height="300px" borderRadius="14px" />
+      }
+    </div>
+  } @else if (fallo()) {
+    <app-estado-vacio
+      icono="pi pi-wifi"
+      titulo="No pudimos cargar el menú"
+      detalle="Revisa tu conexión e intenta de nuevo en unos segundos."
+    />
+  } @else {
+    <div class="categorias" role="tablist" aria-label="Categorías del menú">
+      @for (categoria of categorias(); track categoria.codigo) {
+        <button
+          type="button"
+          role="tab"
+          [class.activa]="categoria.codigo === categoriaActual()?.codigo"
+          [attr.aria-selected]="categoria.codigo === categoriaActual()?.codigo"
+          (click)="elegir(categoria.codigo)"
+        >
+          {{ categoria.nombre }}
+        </button>
+      }
+    </div>
+
+    @if (categoriaActual(); as categoria) {
+      @if (categoria.urlPedirAhora) {
+        <a class="pedir" [href]="categoria.urlPedirAhora" target="_blank" rel="noopener">
+          <p-button label="Pedir ahora" icon="pi pi-shopping-bag" severity="secondary" />
+        </a>
+      }
+
+      @if (categoria.productos.length) {
+        <div class="rejilla">
+          @for (producto of categoria.productos; track producto.idProducto) {
+            <app-producto-card [producto]="producto" />
+          }
+        </div>
+      } @else {
+        <app-estado-vacio titulo="Sin productos por ahora" detalle="Esta categoría se está actualizando." />
+      }
+    }
+  }
+</div>

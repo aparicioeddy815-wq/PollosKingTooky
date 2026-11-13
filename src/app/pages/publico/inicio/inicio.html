@@ -1,0 +1,91 @@
+<section class="hero">
+  <span class="estrella-fondo" aria-hidden="true"></span>
+
+  <div class="hero-interior">
+    <div class="hero-texto">
+      <p class="etiqueta">Pollo frito y hamburguesa</p>
+      <h1>Crocante por fuera. <em>Jugoso</em> por dentro.</h1>
+      <p class="bajada">
+        Pollo frito recién hecho, hamburguesas con carácter y combos pensados para compartir. Pide en el local o
+        reserva tu mesa con anticipación.
+      </p>
+      <div class="hero-acciones">
+        <a routerLink="/menu"><p-button label="Ver el menú" icon="pi pi-arrow-right" iconPos="right" size="large" /></a>
+        <a routerLink="/mi-cuenta/reservas/nueva">
+          <p-button label="Reservar mesa" severity="contrast" [outlined]="true" size="large" styleClass="boton-claro" />
+        </a>
+      </div>
+    </div>
+
+    @if (datos()?.productoMasVendido; as estrella) {
+      <aside class="mas-vendido" aria-label="Producto más vendido">
+        <span class="sello">El favorito de todos</span>
+        @if (estrella.imagenUrl) {
+          <img [src]="estrella.imagenUrl" [alt]="estrella.nombre" />
+        }
+        <h2>{{ estrella.nombre }}</h2>
+        @if (estrella.descripcion) {
+          <p>{{ estrella.descripcion }}</p>
+        }
+        <strong>{{ estrella.precio | bs }}</strong>
+      </aside>
+    }
+  </div>
+</section>
+
+<div class="franja" aria-hidden="true"></div>
+
+<section class="seccion ofertas">
+  <div class="contenedor">
+    <h2 class="titulo-seccion">Combos del día</h2>
+    <p class="subtitulo-seccion">Lo que más se pide hoy en King Tooky, listo para llevar a tu mesa.</p>
+
+    @if (cargandoOfertas()) {
+      <div class="esqueletos">
+        @for (n of [1, 2, 3]; track n) {
+          <p-skeleton height="320px" borderRadius="14px" />
+        }
+      </div>
+    } @else if (ofertas().length) {
+      <p-carousel
+        [value]="ofertas()"
+        [numVisible]="3"
+        [numScroll]="1"
+        [circular]="ofertas().length > 3"
+        [autoplayInterval]="ofertas().length > 3 ? 4500 : 0"
+        [responsiveOptions]="opcionesCarrusel"
+      >
+        <ng-template let-producto #item>
+          <div class="slide">
+            <app-producto-card [producto]="producto" />
+          </div>
+        </ng-template>
+      </p-carousel>
+    } @else {
+      <p class="texto-tenue">Estamos preparando el menú del día. Vuelve en unos minutos.</p>
+    }
+  </div>
+</section>
+
+@if (datos(); as info) {
+  <section class="seccion visita">
+    <div class="contenedor visita-rejilla">
+      <div>
+        <h2 class="titulo-seccion">Te esperamos</h2>
+        <p class="direccion"><i class="pi pi-map-marker"></i> {{ info.ubicacion.direccion }}</p>
+        <a [href]="urlMapa()" target="_blank" rel="noopener"
+          ><p-button label="Cómo llegar" icon="pi pi-external-link" severity="secondary"
+        /></a>
+      </div>
+
+      <ul class="horarios" aria-label="Horarios de atención">
+        @for (h of info.horarios; track h.dias) {
+          <li>
+            <span>{{ h.dias }}</span>
+            <strong>{{ h.horario }}</strong>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+}

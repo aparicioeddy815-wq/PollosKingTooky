@@ -1,0 +1,25 @@
+@use 'mixins' as m;
+
+.columnas {
+  display: grid;
+  gap: 1.5rem;
+
+  @include m.desde(900px) {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.bloque {
+  padding: 1.75rem;
+  border-radius: var(--kt-radio-grande);
+  background: var(--kt-superficie);
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  p-button {
+    justify-self: start;
+  }
+}

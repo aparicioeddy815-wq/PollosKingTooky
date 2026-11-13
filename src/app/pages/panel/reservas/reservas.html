@@ -1,0 +1,57 @@
+<header class="cabecera-pagina">
+  <h1>Reservas</h1>
+  <p>Registra pagos, completa las reservas atendidas y cancela las que ya no aplican.</p>
+</header>
+
+<div class="filtros">
+  <p-datepicker [(ngModel)]="fecha" dateFormat="dd/mm/yy" [showIcon]="true" [showClear]="true" placeholder="Todas las fechas" (onSelect)="cargar()" (onClear)="cargar()" />
+  <p-select [options]="estados" optionLabel="etiqueta" optionValue="valor" [(ngModel)]="estado" [showClear]="true" placeholder="Todos los estados" (onChange)="cargar()" />
+  <p-button icon="pi pi-refresh" severity="secondary" [text]="true" ariaLabel="Actualizar" (onClick)="cargar()" />
+</div>
+
+<p-table [value]="reservas()" [loading]="cargando()" [tableStyle]="{ 'min-width': '56rem' }">
+  <ng-template #header>
+    <tr>
+      <th>Código</th>
+      <th>Cliente</th>
+      <th>Fecha y hora</th>
+      <th>Personas</th>
+      <th>Total</th>
+      <th>Estado</th>
+      <th style="width: 17rem">Acciones</th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-reserva>
+    <tr>
+      <td><strong>{{ reserva.codigo }}</strong></td>
+      <td>
+        {{ reserva.nombreCliente }}
+        <div class="telefono">{{ reserva.telefono }}</div>
+      </td>
+      <td>{{ reserva.fecha | date: 'dd/MM/yyyy' }} · {{ reserva.hora.slice(0, 5) }}</td>
+      <td>{{ reserva.personas }}</td>
+      <td>{{ reserva.total | bs }}</td>
+      <td><app-estado-tag [estado]="reserva.estado" tipo="reserva" /></td>
+      <td>
+        <div class="acciones">
+          @if (reserva.estado === 'PENDIENTE_PAGO') {
+            <p-button label="Registrar pago" size="small" (onClick)="registrarPago(reserva)" />
+          }
+          @if (reserva.estado === 'PAGADA') {
+            <p-button label="Completar" icon="pi pi-check" size="small" (onClick)="completar(reserva)" />
+          }
+          @if (reserva.puedeCancelar) {
+            <p-button label="Cancelar" size="small" [text]="true" (onClick)="cancelar(reserva)" />
+          }
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="7" class="vacio">No hay reservas con esos filtros.</td>
+    </tr>
+  </ng-template>
+</p-table>

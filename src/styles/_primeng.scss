@@ -1,0 +1,62 @@
+// Ajustes finos sobre PrimeNG para que respire la identidad King Tooky.
+
+.p-button {
+  font-family: var(--kt-fuente-texto);
+  font-weight: 700;
+  border-radius: var(--kt-radio-chico);
+}
+
+.p-button:not(.p-button-text):not(.p-button-outlined):not(.p-button-secondary):not(.p-button-contrast) {
+  background: var(--kt-accion);
+  border-color: var(--kt-accion);
+  color: #fff;
+
+  &:not(:disabled):hover {
+    background: var(--kt-primary-30);
+    border-color: var(--kt-primary-30);
+  }
+}
+
+.p-button-secondary:not(.p-button-text):not(.p-button-outlined) {
+  background: var(--kt-secondary-90);
+  border-color: var(--kt-secondary-90);
+  color: var(--kt-secondary-20);
+}
+
+.p-button-contrast:not(.p-button-text):not(.p-button-outlined) {
+  background: var(--kt-neutral-20);
+  border-color: var(--kt-neutral-20);
+  color: #fff;
+}
+
+.p-inputtext,
+.p-select,
+.p-textarea,
+.p-inputnumber-input,
+.p-datepicker-input {
+  background: var(--kt-superficie-alta);
+  border-color: var(--kt-linea);
+  border-radius: var(--kt-radio-chico);
+}
+
+.p-inputtext:enabled:focus {
+  border-color: var(--kt-secondary);
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background: var(--kt-superficie);
+  color: var(--kt-texto-suave);
+  font-weight: 700;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  background: transparent;
+}
+
+.p-dialog {
+  border-radius: var(--kt-radio-grande);
+}
+
+.p-toast {
+  font-family: var(--kt-fuente-texto);
+}

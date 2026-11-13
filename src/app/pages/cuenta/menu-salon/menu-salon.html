@@ -1,0 +1,35 @@
+<div class="cabecera-pagina">
+  <h2 class="titulo-seccion">Menú del salón</h2>
+  <p>Marca con el corazón los platos que más te gustan. Aquí también ves cuántas veces los has pedido.</p>
+</div>
+
+@if (cargando()) {
+  <p class="texto-tenue">Cargando el menú…</p>
+} @else if (categorias().length === 0) {
+  <app-estado-vacio titulo="El menú no está disponible" detalle="Intenta de nuevo en unos minutos." />
+} @else {
+  @for (categoria of categorias(); track categoria.codigo) {
+    <section class="categoria">
+      <h3>{{ categoria.nombre }}</h3>
+      <div class="rejilla">
+        @for (producto of categoria.productos; track producto.idProducto) {
+          <app-producto-card [producto]="producto">
+            <button
+              type="button"
+              class="corazon"
+              [class.activo]="producto.meGusta"
+              [attr.aria-pressed]="producto.meGusta"
+              [attr.aria-label]="(producto.meGusta ? 'Quitar de favoritos: ' : 'Agregar a favoritos: ') + producto.nombre"
+              (click)="alternarMeGusta(producto)"
+            >
+              <i [class]="producto.meGusta ? 'pi pi-heart-fill' : 'pi pi-heart'"></i>
+            </button>
+          </app-producto-card>
+          @if (producto.vecesConsumidas > 0) {
+            <span class="solo-lectores">Lo has pedido {{ producto.vecesConsumidas }} veces</span>
+          }
+        }
+      </div>
+    </section>
+  }
+}

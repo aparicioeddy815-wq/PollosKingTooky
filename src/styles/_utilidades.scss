@@ -1,0 +1,103 @@
+@use 'mixins' as m;
+
+.contenedor {
+  @include m.contenedor;
+}
+
+.seccion {
+  padding-block: 3.5rem;
+
+  @include m.desde(768px) {
+    padding-block: 5rem;
+  }
+}
+
+.titulo-seccion {
+  @include m.titulo(clamp(1.75rem, 4vw, 2.5rem));
+  margin-bottom: 0.5rem;
+}
+
+.subtitulo-seccion {
+  color: var(--kt-texto-suave);
+  max-width: 56ch;
+}
+
+.pagina {
+  @include m.contenedor;
+  padding-block: 2.5rem 4rem;
+  min-height: 60vh;
+}
+
+.cabecera-pagina {
+  margin-bottom: 2rem;
+
+  h1 {
+    @include m.titulo(clamp(1.9rem, 4vw, 2.75rem));
+  }
+
+  p {
+    margin-top: 0.5rem;
+    color: var(--kt-texto-suave);
+    max-width: 60ch;
+  }
+}
+
+.formulario {
+  display: grid;
+  gap: 1.1rem;
+
+  .campo {
+    display: grid;
+    gap: 0.35rem;
+
+    label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--kt-texto-suave);
+    }
+
+    input,
+    textarea,
+    .p-select,
+    .p-inputnumber,
+    .p-datepicker,
+    .p-password {
+      width: 100%;
+    }
+
+    .error {
+      color: var(--kt-primary-40);
+      font-size: 0.82rem;
+    }
+  }
+
+  .fila {
+    display: grid;
+    gap: 1.1rem;
+
+    @include m.desde(640px) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}
+
+.aviso-error {
+  padding: 0.75rem 1rem;
+  border-radius: var(--kt-radio-chico);
+  background: var(--kt-primary-90);
+  color: var(--kt-primary-20);
+  font-size: 0.92rem;
+}
+
+.texto-tenue {
+  color: var(--kt-texto-tenue);
+}
+
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

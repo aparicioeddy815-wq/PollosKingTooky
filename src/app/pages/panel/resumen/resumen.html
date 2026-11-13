@@ -1,0 +1,83 @@
+<header class="encabezado">
+  <div class="cabecera-pagina">
+    <h1>Resumen del día</h1>
+    <p>Ventas, pedidos y stock en un solo vistazo.</p>
+  </div>
+  <p-datepicker
+    [(ngModel)]="fecha"
+    [maxDate]="hoy"
+    dateFormat="dd/mm/yy"
+    [showIcon]="true"
+    [showClear]="true"
+    placeholder="Hoy"
+    (onSelect)="cargar()"
+    (onClear)="cargar()"
+  />
+</header>
+
+@if (cargando() && !datos()) {
+  <p class="texto-tenue">Cargando…</p>
+} @else if (datos(); as d) {
+  <div class="indicadores">
+    <article class="indicador principal">
+      <span>Ventas</span>
+      <strong>{{ d.ventasDelDia | bs }}</strong>
+    </article>
+    <article class="indicador">
+      <span>Pedidos atendidos</span>
+      <strong>{{ d.pedidosAtendidos }}</strong>
+    </article>
+    <article class="indicador">
+      <span>En curso</span>
+      <strong>{{ d.pedidosEnCurso }}</strong>
+    </article>
+    <article class="indicador" [class.alerta]="d.stockCritico > 0">
+      <span>Insumos en stock crítico</span>
+      <strong>{{ d.stockCritico }}</strong>
+    </article>
+  </div>
+
+  <div class="columnas">
+    <section class="bloque">
+      <h2>Ventas por categoría</h2>
+      @if (d.ventasPorCategoria.length === 0) {
+        <app-estado-vacio icono="pi pi-chart-bar" titulo="Sin ventas registradas" detalle="Cuando haya pedidos entregados aparecerán aquí." />
+      } @else {
+        <ul class="barras">
+          @for (venta of d.ventasPorCategoria; track venta.categoria) {
+            <li>
+              <div class="etiqueta">
+                <span>{{ venta.nombre }}</span>
+                <strong>{{ venta.monto | bs }}</strong>
+              </div>
+              <div class="pista"><span class="relleno" [style.width.%]="porcentajeCategoria(venta.monto)"></span></div>
+            </li>
+          }
+        </ul>
+      }
+
+      @if (d.masVendido) {
+        <p class="destacado"><i class="pi pi-star-fill"></i> Más vendido: <strong>{{ d.masVendido.nombre }}</strong> ({{ d.masVendido.unidades }} unidades)</p>
+      }
+    </section>
+
+    <section class="bloque">
+      <h2>Stock crítico</h2>
+      @if (d.insumosCriticos.length === 0) {
+        <app-estado-vacio icono="pi pi-check-circle" titulo="Todo en orden" detalle="Ningún insumo está por debajo de su mínimo." />
+      } @else {
+        <ul class="barras">
+          @for (insumo of d.insumosCriticos; track insumo.idInsumo) {
+            <li>
+              <div class="etiqueta">
+                <span>{{ insumo.nombre }}</span>
+                <strong>{{ insumo.stockActual }} / {{ insumo.stockMinimo }} {{ insumo.unidadMedida }}</strong>
+              </div>
+              <div class="pista"><span class="relleno critico" [style.width.%]="porcentajeStock(insumo.stockActual, insumo.stockMinimo)"></span></div>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  </div>
+}

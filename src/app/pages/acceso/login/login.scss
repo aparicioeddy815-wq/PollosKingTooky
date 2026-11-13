@@ -1,0 +1,25 @@
+:host ::ng-deep .w-full {
+  width: 100%;
+}
+
+.opciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.recordar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--kt-texto-suave);
+}
+
+.pie {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: var(--kt-texto-suave);
+}

@@ -1,0 +1,58 @@
+<div class="cabecera-pagina">
+  <h2 class="titulo-seccion">Quejas y sugerencias</h2>
+  <p>Tu opinión nos ayuda a mejorar. Cuéntanos qué pasó o qué te gustaría ver.</p>
+</div>
+
+<div class="columnas">
+  <form class="formulario bloque" [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+    <div class="fila">
+      <div class="campo">
+        <label for="tipo">Tipo</label>
+        <p-select inputId="tipo" [options]="tipos" optionLabel="etiqueta" optionValue="valor" formControlName="tipo" />
+      </div>
+      <div class="campo">
+        <label for="categoria">Tema</label>
+        <p-select inputId="categoria" [options]="categorias" optionLabel="etiqueta" optionValue="valor" formControlName="categoria" />
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="pedido">Número de pedido (opcional)</label>
+      <p-inputnumber inputId="pedido" formControlName="numeroPedido" [useGrouping]="false" [min]="1" />
+    </div>
+
+    <div class="campo">
+      <label for="mensaje">Mensaje</label>
+      <textarea pTextarea id="mensaje" formControlName="mensaje" rows="5" maxlength="1000"></textarea>
+      @if (formulario.controls.mensaje.touched && formulario.controls.mensaje.invalid) {
+        <small class="error">Cuéntanos un poco más.</small>
+      }
+    </div>
+
+    <p-button type="submit" label="Enviar mensaje" icon="pi pi-send" [loading]="enviando()" />
+  </form>
+
+  <div>
+    <h3 class="subtitulo">Tus mensajes</h3>
+    @if (historial().length === 0) {
+      <app-estado-vacio icono="pi pi-comments" titulo="Todavía no has enviado mensajes" />
+    } @else {
+      <ul class="historial">
+        @for (queja of historial(); track queja.idQueja) {
+          <li>
+            <header>
+              <strong>{{ nombreTipo(queja.tipo) }} · {{ nombreCategoria(queja.categoria) }}</strong>
+              <span class="fecha">{{ queja.fechaCreacion | date: 'dd/MM/yyyy' }}</span>
+            </header>
+            <p>{{ queja.mensaje }}</p>
+            @if (queja.respuesta) {
+              <p class="respuesta"><i class="pi pi-reply"></i> {{ queja.respuesta }}</p>
+            } @else {
+              <p class="pendiente">Pendiente de respuesta</p>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</div>

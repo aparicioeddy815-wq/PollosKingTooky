@@ -1,0 +1,19 @@
+<div class="cabecera-pagina">
+  <h2 class="titulo-seccion">¿Cómo te fue hoy?</h2>
+  <p>Califica tu visita de hoy de 1 a 5 estrellas. Solo toma un momento.</p>
+</div>
+
+<section class="tarjeta">
+  @if (guardada()) {
+    <p class="gracias"><i class="pi pi-check-circle"></i> Ya calificaste tu visita de hoy. Puedes cambiarla si quieres.</p>
+  }
+
+  <p-rating [(ngModel)]="estrellas" [stars]="5" ariaLabel="Calificación" />
+
+  <div class="campo">
+    <label for="comentario">Comentario (opcional)</label>
+    <textarea pTextarea id="comentario" [(ngModel)]="comentario" rows="4" maxlength="500"></textarea>
+  </div>
+
+  <p-button label="Enviar calificación" icon="pi pi-star" [loading]="enviando()" (onClick)="enviar()" />
+</section>

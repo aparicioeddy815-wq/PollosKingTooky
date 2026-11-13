@@ -1,0 +1,32 @@
+<app-acceso-tarjeta titulo="Nueva contraseña" subtitulo="Elige una contraseña que puedas recordar.">
+  @if (!token()) {
+    <p class="aviso-error" role="alert">
+      El enlace no es válido o está incompleto. Solicita uno nuevo desde “¿Olvidaste tu contraseña?”.
+    </p>
+    <p class="pie"><a routerLink="/olvide-contrasena">Pedir otro enlace</a></p>
+  } @else {
+    <form class="formulario" [formGroup]="formulario" (ngSubmit)="guardar()" novalidate>
+      @if (error()) {
+        <p class="aviso-error" role="alert">{{ error() }}</p>
+      }
+
+      <div class="campo">
+        <label for="nueva">Nueva contraseña</label>
+        <p-password
+          inputId="nueva"
+          formControlName="nuevaContrasena"
+          [feedback]="false"
+          [toggleMask]="true"
+          autocomplete="new-password"
+          styleClass="ancho"
+          inputStyleClass="ancho"
+        />
+        @if (formulario.controls.nuevaContrasena.touched && formulario.controls.nuevaContrasena.invalid) {
+          <small class="error">Mínimo 6 caracteres.</small>
+        }
+      </div>
+
+      <p-button type="submit" label="Guardar contraseña" [loading]="enviando()" styleClass="ancho" />
+    </form>
+  }
+</app-acceso-tarjeta>

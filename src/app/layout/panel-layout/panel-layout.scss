@@ -1,0 +1,66 @@
+@use 'mixins' as m;
+
+.panel {
+  @include m.contenedor;
+  display: grid;
+  gap: 1.5rem;
+  padding-block: 1.5rem 3rem;
+
+  @include m.desde(960px) {
+    grid-template-columns: 220px 1fr;
+    gap: 2.5rem;
+    padding-block: 2.5rem 4rem;
+  }
+}
+
+.lateral {
+  @include m.desde(960px) {
+    position: sticky;
+    top: calc(var(--kt-alto-navbar) + 1.5rem);
+    align-self: start;
+  }
+
+  .rol {
+    margin-bottom: 0.75rem;
+    font-family: var(--kt-fuente-titulo);
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--kt-texto-tenue);
+  }
+
+  nav {
+    display: flex;
+    gap: 0.35rem;
+    overflow-x: auto;
+
+    @include m.desde(960px) {
+      flex-direction: column;
+      overflow: visible;
+    }
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: var(--kt-radio-chico);
+    color: var(--kt-texto-suave);
+    font-weight: 600;
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--kt-superficie);
+      text-decoration: none;
+    }
+
+    &.activo {
+      background: var(--kt-accion);
+      color: #fff;
+    }
+  }
+}
+
+.contenido {
+  min-width: 0;
+}

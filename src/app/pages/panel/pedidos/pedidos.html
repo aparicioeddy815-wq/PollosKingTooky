@@ -1,0 +1,90 @@
+<header class="encabezado">
+  <div class="cabecera-pagina">
+    <h1>Pedidos</h1>
+    <p>Sigue cada turno desde que entra hasta que se entrega. La lista se actualiza sola.</p>
+  </div>
+  @if (auth.tienePermiso('PEDIDO_CREAR')) {
+    <a routerLink="/panel/pedidos/nuevo"><p-button label="Nuevo pedido" icon="pi pi-plus" /></a>
+  }
+</header>
+
+<div class="filtros">
+  <p-datepicker [(ngModel)]="fecha" [maxDate]="hoy" dateFormat="dd/mm/yy" [showIcon]="true" [showClear]="true" placeholder="Hoy" (onSelect)="cargar()" (onClear)="cargar()" />
+  <p-select [options]="estados" optionLabel="etiqueta" optionValue="valor" [(ngModel)]="estado" [showClear]="true" placeholder="Todos los estados" (onChange)="cargar()" />
+  <p-button icon="pi pi-refresh" severity="secondary" [text]="true" ariaLabel="Actualizar" (onClick)="cargar()" />
+</div>
+
+<p-table [value]="pedidos()" dataKey="idPedido" [loading]="cargando()" [tableStyle]="{ 'min-width': '52rem' }" styleClass="tabla-pedidos">
+  <ng-template #header>
+    <tr>
+      <th style="width: 3rem"></th>
+      <th>Turno</th>
+      <th>Tipo</th>
+      <th>Estado</th>
+      <th>Hora</th>
+      <th>Total</th>
+      <th style="width: 18rem">Acciones</th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-pedido let-expandido="expanded">
+    <tr>
+      <td>
+        <p-button [pRowToggler]="pedido" [text]="true" [rounded]="true" size="small" [icon]="expandido ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" ariaLabel="Ver detalle" />
+      </td>
+      <td><strong class="turno">#{{ pedido.numeroTurno }}</strong></td>
+      <td>{{ tipo(pedido) }}</td>
+      <td><app-estado-tag [estado]="pedido.estado" /></td>
+      <td>
+        {{ pedido.fechaHora | date: 'HH:mm' }}
+        @if (pedido.estado === 'PENDIENTE' || pedido.estado === 'EN_PREPARACION') {
+          <small class="espera">· {{ pedido.minutosTranscurridos }} min</small>
+        }
+      </td>
+      <td>{{ pedido.total | bs }}</td>
+      <td>
+        @if (auth.tienePermiso('PEDIDO_ESTADO')) {
+          <div class="acciones">
+            @switch (pedido.estado) {
+              @case ('PENDIENTE') {
+                <p-button label="Preparar" size="small" (onClick)="preparar(pedido)" />
+                <p-button label="Cancelar" size="small" [text]="true" (onClick)="cancelar(pedido)" />
+              }
+              @case ('EN_PREPARACION') {
+                <p-button label="Listo" icon="pi pi-check" size="small" (onClick)="marcarListo(pedido)" />
+                <p-button label="Cancelar" size="small" [text]="true" (onClick)="cancelar(pedido)" />
+              }
+              @case ('LISTO') {
+                <p-button label="Entregar" size="small" (onClick)="entregar(pedido)" />
+                <p-button icon="pi pi-bell" size="small" severity="secondary" ariaLabel="Llamar con el timbre" (onClick)="tocarTimbre(pedido)" />
+              }
+            }
+          </div>
+        }
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #expandedrow let-pedido>
+    <tr>
+      <td colspan="7">
+        <ul class="detalle">
+          @for (linea of pedido.detalles; track linea.idProducto) {
+            <li>
+              <span>{{ linea.cantidad }} × {{ linea.producto }}
+                @if (linea.observaciones) { <em>({{ linea.observaciones }})</em> }
+              </span>
+              <span>{{ linea.subtotal | bs }}</span>
+            </li>
+          }
+        </ul>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="7" class="vacio">No hay pedidos con esos filtros.</td>
+    </tr>
+  </ng-template>
+</p-table>

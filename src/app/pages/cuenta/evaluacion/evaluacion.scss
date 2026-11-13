@@ -1,0 +1,37 @@
+.tarjeta {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 520px;
+  padding: 1.75rem;
+  border-radius: var(--kt-radio-grande);
+  background: var(--kt-superficie);
+
+  p-button {
+    justify-self: start;
+  }
+
+  .campo {
+    display: grid;
+    gap: 0.35rem;
+
+    label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--kt-texto-suave);
+    }
+  }
+}
+
+:host ::ng-deep .p-rating-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.gracias {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--kt-radio-chico);
+  background: var(--kt-tertiary-95);
+  color: var(--kt-tertiary-20);
+}

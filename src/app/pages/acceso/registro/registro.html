@@ -1,0 +1,67 @@
+<app-acceso-tarjeta titulo="Crea tu cuenta" subtitulo="Reserva mesa, guarda tus favoritos y deja tus comentarios.">
+  <form class="formulario" [formGroup]="formulario" (ngSubmit)="crearCuenta()" novalidate>
+    @if (error()) {
+      <p class="aviso-error" role="alert">{{ error() }}</p>
+    }
+
+    <div class="campo">
+      <label for="nombre">Nombre completo</label>
+      <input pInputText id="nombre" formControlName="nombreCompleto" autocomplete="name" />
+      @if (invalido('nombreCompleto')) {
+        <small class="error">Escribe tu nombre completo.</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="usuario">Usuario</label>
+      <input pInputText id="usuario" formControlName="nombreUsuario" autocomplete="username" />
+      @if (invalido('nombreUsuario')) {
+        <small class="error">De 3 a 50 caracteres: letras, números, punto, guion o guion bajo.</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="correo">Correo</label>
+      <input pInputText id="correo" type="email" formControlName="correo" autocomplete="email" />
+      @if (invalido('correo')) {
+        <small class="error">Escribe un correo válido.</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="contrasena">Contraseña</label>
+      <p-password
+        inputId="contrasena"
+        formControlName="contrasena"
+        [feedback]="false"
+        [toggleMask]="true"
+        autocomplete="new-password"
+        styleClass="w-full"
+        inputStyleClass="w-full"
+      />
+      @if (invalido('contrasena')) {
+        <small class="error">Mínimo 6 caracteres.</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="repetir">Repite la contraseña</label>
+      <p-password
+        inputId="repetir"
+        formControlName="repetir"
+        [feedback]="false"
+        [toggleMask]="true"
+        autocomplete="new-password"
+        styleClass="w-full"
+        inputStyleClass="w-full"
+      />
+      @if (formulario.controls.repetir.touched && formulario.hasError('distintas')) {
+        <small class="error">Las contraseñas no coinciden.</small>
+      }
+    </div>
+
+    <p-button type="submit" label="Crear cuenta" [loading]="enviando()" styleClass="w-full" />
+  </form>
+
+  <p class="pie">¿Ya tienes cuenta? <a routerLink="/ingresar">Ingresa</a></p>
+</app-acceso-tarjeta>

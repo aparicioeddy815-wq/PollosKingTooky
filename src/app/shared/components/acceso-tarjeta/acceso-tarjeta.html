@@ -1,0 +1,10 @@
+<div class="fondo">
+  <section class="tarjeta">
+    <img src="images/logo-king-tooky.png" alt="King Tooky" width="132" height="83" />
+    <h1>{{ titulo() }}</h1>
+    @if (subtitulo()) {
+      <p class="subtitulo">{{ subtitulo() }}</p>
+    }
+    <ng-content />
+  </section>
+</div>

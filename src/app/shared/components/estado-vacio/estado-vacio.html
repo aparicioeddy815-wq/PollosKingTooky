@@ -1,0 +1,8 @@
+<div class="vacio">
+  <i [class]="icono()" aria-hidden="true"></i>
+  <h3>{{ titulo() }}</h3>
+  @if (detalle()) {
+    <p>{{ detalle() }}</p>
+  }
+  <ng-content />
+</div>

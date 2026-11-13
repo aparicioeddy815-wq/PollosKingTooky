@@ -1,0 +1,43 @@
+<app-acceso-tarjeta titulo="Ingresar" subtitulo="Usa tu usuario o correo para entrar a tu cuenta.">
+  <form class="formulario" [formGroup]="formulario" (ngSubmit)="ingresar()" novalidate>
+    @if (error()) {
+      <p class="aviso-error" role="alert">{{ error() }}</p>
+    }
+
+    <div class="campo">
+      <label for="usuario">Usuario o correo</label>
+      <input pInputText id="usuario" formControlName="nombreUsuario" autocomplete="username" />
+      @if (formulario.controls.nombreUsuario.touched && formulario.controls.nombreUsuario.invalid) {
+        <small class="error">Escribe tu usuario o correo.</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="contrasena">Contraseña</label>
+      <p-password
+        inputId="contrasena"
+        formControlName="contrasena"
+        [feedback]="false"
+        [toggleMask]="true"
+        autocomplete="current-password"
+        styleClass="w-full"
+        inputStyleClass="w-full"
+      />
+      @if (formulario.controls.contrasena.touched && formulario.controls.contrasena.invalid) {
+        <small class="error">Escribe tu contraseña.</small>
+      }
+    </div>
+
+    <div class="opciones">
+      <label class="recordar">
+        <p-checkbox formControlName="recordarme" [binary]="true" inputId="recordarme" />
+        Mantener sesión iniciada
+      </label>
+      <a routerLink="/olvide-contrasena">¿Olvidaste tu contraseña?</a>
+    </div>
+
+    <p-button type="submit" label="Ingresar" [loading]="enviando()" styleClass="w-full" />
+  </form>
+
+  <p class="pie">¿Aún no tienes cuenta? <a routerLink="/registrarse">Crea una</a></p>
+</app-acceso-tarjeta>

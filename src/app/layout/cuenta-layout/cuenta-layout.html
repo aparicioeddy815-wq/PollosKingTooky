@@ -1,0 +1,19 @@
+<div class="cuenta">
+  <header class="saludo">
+    <h1>Hola, {{ nombre() }}</h1>
+    <p>Reserva tu mesa, guarda tus platos favoritos y cuéntanos cómo te fue.</p>
+  </header>
+
+  <nav class="pestanas" aria-label="Secciones de mi cuenta">
+    <a routerLink="reservas" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Mis reservas</a>
+    @if (puedeReservar()) {
+      <a routerLink="reservas/nueva" routerLinkActive="activo">Nueva reserva</a>
+    }
+    <a routerLink="menu-salon" routerLinkActive="activo">Menú del salón</a>
+    <a routerLink="quejas" routerLinkActive="activo">Quejas y sugerencias</a>
+    <a routerLink="evaluacion" routerLinkActive="activo">Evaluar el día</a>
+    <a routerLink="/perfil">Mi perfil</a>
+  </nav>
+
+  <router-outlet />
+</div>

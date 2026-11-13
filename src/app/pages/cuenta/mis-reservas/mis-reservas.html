@@ -1,0 +1,87 @@
+<div class="barra">
+  <p-select
+    [options]="estados"
+    optionLabel="etiqueta"
+    optionValue="valor"
+    [(ngModel)]="estadoFiltro"
+    (onChange)="cargar()"
+    [showClear]="true"
+    placeholder="Todos los estados"
+    ariaLabel="Filtrar por estado"
+  />
+  <a routerLink="/mi-cuenta/reservas/nueva"><p-button label="Nueva reserva" icon="pi pi-plus" /></a>
+</div>
+
+@if (cargando()) {
+  <p class="texto-tenue">Cargando tus reservas…</p>
+} @else if (reservas().length === 0) {
+  <app-estado-vacio
+    icono="pi pi-calendar"
+    titulo="Aún no tienes reservas"
+    detalle="Cuando reserves una mesa, la verás aquí con su código y su estado."
+  />
+} @else {
+  <div class="lista">
+    @for (reserva of reservas(); track reserva.idReserva) {
+      <article class="reserva">
+        <header>
+          <div>
+            <p class="codigo">{{ reserva.codigo }}</p>
+            <h3>{{ reserva.fecha | date: 'fullDate' }} · {{ reserva.hora.slice(0, 5) }}</h3>
+            <p class="detalle">{{ reserva.personas }} personas · Turno {{ reserva.turno }}</p>
+          </div>
+          <app-estado-tag [estado]="reserva.estado" tipo="reserva" />
+        </header>
+
+        <ul class="platos">
+          @for (item of reserva.items; track item.idProducto) {
+            <li>
+              <span>{{ item.cantidad }} × {{ item.producto }}</span>
+              <span>{{ item.subtotal | bs }}</span>
+            </li>
+          }
+        </ul>
+
+        @if (reserva.advertenciaPago) {
+          <p class="advertencia"><i class="pi pi-info-circle"></i> {{ reserva.advertenciaPago }}</p>
+        }
+
+        <footer>
+          <strong class="total">{{ reserva.total | bs }}</strong>
+          <div class="acciones">
+            <p-button label="Recibo" icon="pi pi-download" severity="secondary" size="small" (onClick)="descargarRecibo(reserva)" />
+            @if (reserva.puedeReprogramar) {
+              <p-button label="Reprogramar" icon="pi pi-calendar" severity="secondary" size="small" (onClick)="abrirReprogramar(reserva)" />
+            }
+            @if (reserva.puedeCancelar) {
+              <p-button label="Cancelar" icon="pi pi-times" [text]="true" size="small" (onClick)="pedirCancelacion(reserva)" />
+            }
+          </div>
+        </footer>
+      </article>
+    }
+  </div>
+}
+
+<p-dialog
+  header="Reprogramar reserva"
+  [visible]="reprogramando() !== null"
+  (visibleChange)="$event || reprogramando.set(null)"
+  [modal]="true"
+  [style]="{ width: '420px' }"
+>
+  <div class="formulario">
+    <div class="campo">
+      <label for="nueva-fecha">Nueva fecha</label>
+      <p-datepicker inputId="nueva-fecha" [(ngModel)]="nuevaFecha" [minDate]="hoy" dateFormat="dd/mm/yy" appendTo="body" />
+    </div>
+    <div class="campo">
+      <label for="nueva-hora">Nueva hora</label>
+      <p-datepicker inputId="nueva-hora" [(ngModel)]="nuevaHora" [timeOnly]="true" hourFormat="24" [stepMinute]="15" appendTo="body" />
+    </div>
+  </div>
+  <ng-template #footer>
+    <p-button label="Cerrar" [text]="true" (onClick)="reprogramando.set(null)" />
+    <p-button label="Guardar cambio" (onClick)="confirmarReprogramacion()" />
+  </ng-template>
+</p-dialog>

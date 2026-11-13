@@ -1,0 +1,91 @@
+<div class="cabecera-pagina">
+  <h2 class="titulo-seccion">Reserva tu mesa</h2>
+  <p>Cuéntanos cuándo vienes y elige los platos que quieres encontrar listos a tu llegada.</p>
+</div>
+
+<form class="reserva" [formGroup]="formulario" (ngSubmit)="reservar()" novalidate>
+  <div class="formulario datos">
+    <h3>Datos de la reserva</h3>
+
+    <div class="campo">
+      <label for="nombre">A nombre de</label>
+      <input pInputText id="nombre" formControlName="nombreCliente" />
+    </div>
+
+    <div class="fila">
+      <div class="campo">
+        <label for="telefono">Teléfono</label>
+        <input pInputText id="telefono" formControlName="telefono" inputmode="tel" />
+        @if (formulario.controls.telefono.touched && formulario.controls.telefono.invalid) {
+          <small class="error">Escribe un teléfono válido.</small>
+        }
+      </div>
+      <div class="campo">
+        <label for="correo">Correo (opcional)</label>
+        <input pInputText id="correo" type="email" formControlName="correo" />
+      </div>
+    </div>
+
+    <div class="fila">
+      <div class="campo">
+        <label for="fecha">Fecha</label>
+        <p-datepicker inputId="fecha" formControlName="fecha" [minDate]="hoy" dateFormat="dd/mm/yy" [showIcon]="true" appendTo="body" />
+        @if (formulario.controls.fecha.touched && formulario.controls.fecha.invalid) {
+          <small class="error">Elige una fecha.</small>
+        }
+      </div>
+      <div class="campo">
+        <label for="hora">Hora</label>
+        <p-datepicker inputId="hora" formControlName="hora" [timeOnly]="true" hourFormat="24" [stepMinute]="15" [showIcon]="true" icon="pi pi-clock" appendTo="body" />
+        @if (formulario.controls.hora.touched && formulario.controls.hora.invalid) {
+          <small class="error">Elige una hora.</small>
+        }
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="personas">Personas</label>
+      <p-inputnumber inputId="personas" formControlName="personas" [showButtons]="true" [min]="1" [max]="50" />
+    </div>
+
+    <div class="campo">
+      <label for="notas">Notas (opcional)</label>
+      <textarea pTextarea id="notas" formControlName="notas" rows="3" placeholder="Cumpleaños, silla para bebé, alergias…"></textarea>
+    </div>
+  </div>
+
+  <div class="platos">
+    <h3>Elige tus platos</h3>
+    @if (sinPlatos()) {
+      <p class="aviso-error" role="alert">Agrega al menos un plato para continuar.</p>
+    }
+
+    <ul class="lista">
+      @for (plato of platos(); track plato.idProducto) {
+        <li [class.elegido]="cantidadDe(plato) > 0">
+          <div class="info">
+            <strong>{{ plato.nombre }}</strong>
+            <span>{{ plato.precio | bs }}</span>
+          </div>
+          <div class="contador">
+            <button type="button" (click)="cambiarCantidad(plato, -1)" [disabled]="cantidadDe(plato) === 0" [attr.aria-label]="'Quitar uno de ' + plato.nombre">
+              <i class="pi pi-minus"></i>
+            </button>
+            <span aria-live="polite">{{ cantidadDe(plato) }}</span>
+            <button type="button" (click)="cambiarCantidad(plato, 1)" [attr.aria-label]="'Agregar uno de ' + plato.nombre">
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+        </li>
+      }
+    </ul>
+
+    <div class="resumen">
+      <div>
+        <span>Total estimado</span>
+        <strong>{{ total() | bs }}</strong>
+      </div>
+      <p-button type="submit" label="Confirmar reserva" icon="pi pi-check" [loading]="enviando()" />
+    </div>
+  </div>
+</form>

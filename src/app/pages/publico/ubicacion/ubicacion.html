@@ -1,0 +1,34 @@
+<div class="pagina">
+  <header class="cabecera-pagina">
+    <h1>Ubicación y horarios</h1>
+    <p>Ven a visitarnos. Aquí tienes cómo llegar y cuándo estamos abiertos.</p>
+  </header>
+
+  <div class="rejilla">
+    <div class="mapa">
+      @if (mapa(); as url) {
+        <iframe [src]="url" title="Mapa de King Tooky" loading="lazy"></iframe>
+      }
+    </div>
+
+    <div class="datos">
+      @if (ubicacion(); as u) {
+        <h2>Dirección</h2>
+        <p class="direccion"><i class="pi pi-map-marker"></i> {{ u.direccion }}</p>
+        <a [href]="enlaceMapa()" target="_blank" rel="noopener"
+          ><p-button label="Abrir en Google Maps" icon="pi pi-external-link" severity="secondary"
+        /></a>
+      }
+
+      <h2>Horarios de atención</h2>
+      <ul class="horarios">
+        @for (h of horarios(); track h.dias) {
+          <li>
+            <span>{{ h.dias }}</span>
+            <strong>{{ h.horario }}</strong>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>

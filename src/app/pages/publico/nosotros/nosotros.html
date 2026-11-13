@@ -1,0 +1,17 @@
+<div class="pagina">
+  <header class="cabecera-pagina">
+    <h1>Sobre {{ info()?.nombreLocal ?? 'King Tooky' }}</h1>
+    <p>Pollo frito y hamburguesa hechos con oficio.</p>
+  </header>
+
+  <div class="historia">
+    <img src="images/logo-king-tooky.png" alt="Logotipo de King Tooky" width="320" height="200" />
+    <div class="texto">
+      @if (info(); as datos) {
+        <p>{{ datos.historia }}</p>
+      } @else {
+        <p class="texto-tenue">Cargando nuestra historia…</p>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+
+  input {
+    min-width: 260px;
+  }
+}
+
+.secundario {
+  color: var(--kt-texto-tenue);
+  font-size: 0.85rem;
+}
+
+.vacio {
+  padding: 2rem;
+  text-align: center;
+  color: var(--kt-texto-tenue);
+}

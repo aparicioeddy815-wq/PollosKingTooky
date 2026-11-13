@@ -1,0 +1,52 @@
+<header class="cabecera-pagina">
+  <h1>Usuarios</h1>
+  <p>Consulta quién tiene acceso al sistema y activa o desactiva cuentas.</p>
+</header>
+
+<div class="filtros">
+  <input pInputText type="search" placeholder="Buscar por nombre o usuario" [(ngModel)]="busqueda" (keyup.enter)="cargar()" aria-label="Buscar usuario" />
+  <p-select [options]="opcionesEstado" optionLabel="etiqueta" optionValue="valor" [(ngModel)]="estado" [showClear]="true" placeholder="Todos" (onChange)="cargar()" />
+  <p-button label="Buscar" icon="pi pi-search" severity="secondary" (onClick)="cargar()" />
+</div>
+
+<p-table [value]="usuarios()" [loading]="cargando()" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template #header>
+    <tr>
+      <th>Usuario</th>
+      <th>Rol</th>
+      <th>Estado</th>
+      <th>Último acceso</th>
+      @if (auth.tienePermiso('USUARIO_ESCRIBIR')) {
+        <th style="width: 9rem">Acciones</th>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-usuario>
+    <tr>
+      <td>
+        <strong>{{ usuario.nombreCompleto }}</strong>
+        <div class="secundario">{{ usuario.nombreUsuario }} · {{ usuario.correo }}</div>
+      </td>
+      <td>{{ usuario.rol }}</td>
+      <td><p-tag [value]="usuario.estado === 1 ? 'Activo' : 'Inactivo'" [severity]="usuario.estado === 1 ? 'success' : 'secondary'" /></td>
+      <td>{{ usuario.ultimoAcceso ? (usuario.ultimoAcceso | date: 'dd/MM/yyyy HH:mm') : 'Nunca' }}</td>
+      @if (auth.tienePermiso('USUARIO_ESCRIBIR')) {
+        <td>
+          <p-button
+            [label]="usuario.estado === 1 ? 'Desactivar' : 'Activar'"
+            size="small"
+            [severity]="usuario.estado === 1 ? 'secondary' : 'primary'"
+            (onClick)="alternarEstado(usuario)"
+          />
+        </td>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="5" class="vacio">No encontramos usuarios con esos filtros.</td>
+    </tr>
+  </ng-template>
+</p-table>

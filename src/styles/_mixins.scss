@@ -1,0 +1,38 @@
+@mixin contenedor {
+  width: 100%;
+  max-width: var(--kt-ancho-max);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@mixin desde($ancho) {
+  @media (min-width: $ancho) {
+    @content;
+  }
+}
+
+@mixin hasta($ancho) {
+  @media (max-width: $ancho - 1px) {
+    @content;
+  }
+}
+
+@mixin titulo($tamano, $peso: 800) {
+  font-family: var(--kt-fuente-titulo);
+  font-size: $tamano;
+  font-weight: $peso;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+// Franja de chevrones tomada del logotipo
+@mixin franja-chevrones($color: '%23F47C18') {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='16' viewBox='0 0 28 16'><path d='M4 1l7 7-7 7' fill='none' stroke='#{$color}' stroke-width='3' stroke-linecap='square'/></svg>");
+  background-repeat: repeat-x;
+  background-size: 28px 16px;
+}
+
+// Estrella de cinco puntas (la del logotipo)
+@mixin forma-estrella {
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}

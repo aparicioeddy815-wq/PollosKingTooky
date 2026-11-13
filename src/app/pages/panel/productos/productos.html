@@ -1,0 +1,126 @@
+<header class="encabezado">
+  <div class="cabecera-pagina">
+    <h1>Productos</h1>
+    <p>Administra lo que se muestra en el menú y su disponibilidad.</p>
+  </div>
+  @if (auth.tienePermiso('PRODUCTO_ESCRIBIR')) {
+    <p-button label="Nuevo producto" icon="pi pi-plus" (onClick)="abrirNuevo()" />
+  }
+</header>
+
+<div class="filtros">
+  <input pInputText type="search" placeholder="Buscar por nombre" [(ngModel)]="busqueda" (keyup.enter)="buscar()" aria-label="Buscar producto" />
+  <p-select [options]="categorias" optionLabel="etiqueta" optionValue="valor" [(ngModel)]="categoriaFiltro" [showClear]="true" placeholder="Todas las categorías" (onChange)="buscar()" />
+  <p-button label="Buscar" icon="pi pi-search" severity="secondary" (onClick)="buscar()" />
+</div>
+
+<p-table
+  [value]="productos()"
+  [lazy]="true"
+  (onLazyLoad)="alCargarPagina($event)"
+  [paginator]="true"
+  [rows]="filas"
+  [totalRecords]="total()"
+  [loading]="cargando()"
+  [tableStyle]="{ 'min-width': '44rem' }"
+>
+  <ng-template #header>
+    <tr>
+      <th>Producto</th>
+      <th>Categoría</th>
+      <th>Precio</th>
+      <th>Disponible</th>
+      @if (auth.tienePermiso('PRODUCTO_ESCRIBIR')) {
+        <th style="width: 8rem">Acciones</th>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-producto>
+    <tr>
+      <td>
+        <strong>{{ producto.nombre }}</strong>
+        @if (producto.descripcion) {
+          <div class="descripcion">{{ producto.descripcion }}</div>
+        }
+      </td>
+      <td>{{ nombreCategoria(producto.categoria) }}</td>
+      <td>{{ producto.precio | bs }}</td>
+      <td>
+        <p-toggleswitch
+          [ngModel]="producto.disponible"
+          (onChange)="cambiarDisponibilidad(producto, $event.checked)"
+          [disabled]="!auth.tienePermiso('PRODUCTO_ESCRIBIR')"
+          [ariaLabel]="'Disponibilidad de ' + producto.nombre"
+        />
+      </td>
+      @if (auth.tienePermiso('PRODUCTO_ESCRIBIR')) {
+        <td>
+          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" ariaLabel="Editar" (onClick)="abrirEdicion(producto)" />
+          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" ariaLabel="Eliminar" (onClick)="eliminar(producto)" />
+        </td>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="5" class="vacio">No encontramos productos con esos filtros.</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [header]="editando() ? 'Editar producto' : 'Nuevo producto'"
+  [visible]="dialogoAbierto()"
+  (visibleChange)="dialogoAbierto.set($event)"
+  [modal]="true"
+  [style]="{ width: '480px' }"
+>
+  <form class="formulario" [formGroup]="formulario" (ngSubmit)="guardar()" novalidate id="form-producto">
+    <div class="campo">
+      <label for="nombre">Nombre</label>
+      <input pInputText id="nombre" formControlName="nombre" />
+      @if (formulario.controls.nombre.touched && formulario.controls.nombre.invalid) {
+        <small class="error">El nombre es obligatorio.</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="descripcion">Descripción</label>
+      <textarea pTextarea id="descripcion" formControlName="descripcion" rows="3"></textarea>
+    </div>
+
+    <div class="fila">
+      <div class="campo">
+        <label for="precio">Precio (Bs)</label>
+        <p-inputnumber inputId="precio" formControlName="precio" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" [min]="0" />
+        @if (formulario.controls.precio.touched && formulario.controls.precio.invalid) {
+          <small class="error">Indica un precio válido.</small>
+        }
+      </div>
+      <div class="campo">
+        <label for="categoria">Categoría</label>
+        <p-select inputId="categoria" [options]="categorias" optionLabel="etiqueta" optionValue="valor" formControlName="categoria" appendTo="body" />
+        @if (formulario.controls.categoria.touched && formulario.controls.categoria.invalid) {
+          <small class="error">Elige una categoría.</small>
+        }
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="imagen">URL de la imagen (opcional)</label>
+      <input pInputText id="imagen" formControlName="imagenUrl" placeholder="https://…" />
+    </div>
+
+    <label class="interruptor">
+      <p-toggleswitch formControlName="disponible" />
+      Disponible en el menú
+    </label>
+  </form>
+
+  <ng-template #footer>
+    <p-button label="Cancelar" [text]="true" (onClick)="dialogoAbierto.set(false)" />
+    <p-button label="Guardar" [loading]="guardando()" (onClick)="guardar()" />
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,22 @@
+.vacio {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--kt-texto-suave);
+
+  i {
+    font-size: 2.2rem;
+    color: var(--kt-secondary);
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    color: var(--kt-texto);
+  }
+
+  p {
+    max-width: 44ch;
+  }
+}

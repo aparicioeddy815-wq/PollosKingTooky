@@ -1,0 +1,61 @@
+<header class="cabecera-pagina">
+  <h1>Nuevo pedido</h1>
+  <p>Toca un producto para agregarlo al ticket.</p>
+</header>
+
+<div class="caja">
+  <section>
+    <div class="categorias" role="tablist" aria-label="Categorías">
+      @for (categoria of categorias(); track categoria.codigo) {
+        <button type="button" role="tab" [class.activa]="categoria.codigo === categoriaActual()?.codigo" (click)="seleccionada.set(categoria.codigo)">
+          {{ categoria.nombre }}
+        </button>
+      }
+    </div>
+
+    <div class="productos">
+      @for (producto of categoriaActual()?.productos ?? []; track producto.idProducto) {
+        <button type="button" class="producto" [disabled]="!producto.disponible" (click)="agregar(producto)">
+          <strong>{{ producto.nombre }}</strong>
+          <span>{{ producto.disponible ? (producto.precio | bs) : 'Agotado' }}</span>
+        </button>
+      }
+    </div>
+  </section>
+
+  <aside class="ticket" aria-label="Ticket del pedido">
+    <h2>Ticket</h2>
+
+    <p-select [options]="tipos" optionLabel="etiqueta" optionValue="valor" [(ngModel)]="tipoPedido" ariaLabel="Tipo de pedido" styleClass="ancho" />
+
+    @if (ticket().length === 0) {
+      <p class="vacio">Aún no hay productos.</p>
+    } @else {
+      <ul class="lineas">
+        @for (linea of ticket(); track linea.producto.idProducto) {
+          <li>
+            <span class="nombre">{{ linea.producto.nombre }}</span>
+            <div class="contador">
+              <button type="button" (click)="cambiar(linea, -1)" [attr.aria-label]="'Quitar uno de ' + linea.producto.nombre"><i class="pi pi-minus"></i></button>
+              <span>{{ linea.cantidad }}</span>
+              <button type="button" (click)="cambiar(linea, 1)" [attr.aria-label]="'Agregar uno de ' + linea.producto.nombre"><i class="pi pi-plus"></i></button>
+            </div>
+            <strong>{{ linea.producto.precio * linea.cantidad | bs }}</strong>
+          </li>
+        }
+      </ul>
+    }
+
+    <div class="total">
+      <span>Total</span>
+      <strong>{{ total() | bs }}</strong>
+    </div>
+
+    <div class="botones">
+      <p-button label="Confirmar pedido" icon="pi pi-check" [loading]="enviando()" (onClick)="confirmar()" styleClass="ancho" />
+      @if (ticket().length) {
+        <p-button label="Vaciar" [text]="true" (onClick)="vaciar()" />
+      }
+    </div>
+  </aside>
+</div>

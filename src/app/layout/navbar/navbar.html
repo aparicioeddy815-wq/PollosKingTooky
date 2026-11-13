@@ -1,0 +1,47 @@
+<header class="barra">
+  <div class="barra-interior">
+    <a routerLink="/" class="marca" aria-label="King Tooky, ir al inicio" (click)="cerrarMenu()">
+      <img src="images/logo-nav.png" alt="King Tooky" width="80" height="40" />
+    </a>
+
+    <button
+      type="button"
+      class="hamburguesa"
+      [attr.aria-expanded]="menuAbierto()"
+      aria-label="Abrir menú de navegación"
+      (click)="alternarMenu()"
+    >
+      <i [class]="menuAbierto() ? 'pi pi-times' : 'pi pi-bars'"></i>
+    </button>
+
+    <nav class="navegacion" [class.abierto]="menuAbierto()" aria-label="Principal">
+      <ul>
+        @for (enlace of enlaces; track enlace.ruta) {
+          <li>
+            <a
+              [routerLink]="enlace.ruta"
+              routerLinkActive="activo"
+              [routerLinkActiveOptions]="{ exact: enlace.ruta === '/' }"
+              (click)="cerrarMenu()"
+              >{{ enlace.texto }}</a
+            >
+          </li>
+        }
+      </ul>
+
+      <div class="acciones">
+        @if (auth.autenticado()) {
+          <button type="button" class="usuario" (click)="menu.toggle($event)" aria-haspopup="true">
+            <p-avatar [label]="iniciales()" shape="circle" styleClass="avatar-kt" />
+            <span class="nombre">{{ auth.sesion()?.nombreCompleto }}</span>
+            <i class="pi pi-angle-down"></i>
+          </button>
+          <p-menu #menu [model]="opcionesUsuario()" [popup]="true" appendTo="body" />
+        } @else {
+          <a routerLink="/ingresar" (click)="cerrarMenu()"><p-button label="Ingresar" severity="secondary" /></a>
+          <a routerLink="/registrarse" (click)="cerrarMenu()"><p-button label="Crear cuenta" /></a>
+        }
+      </div>
+    </nav>
+  </div>
+</header>

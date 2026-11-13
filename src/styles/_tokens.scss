@@ -1,0 +1,67 @@
+// Paleta oficial King Tooky.
+// Cada escala va del tono 0 (negro) al 100 (blanco), tomada del tablero de marca.
+
+$primary: (
+  0: #000000, 10: #410100, 20: #680200, 30: #920400, 40: #ba1b0e,
+  50: #de3725, 70: #ff8a77, 80: #ffb4a8, 90: #ffdad4, 95: #ffedea, 100: #ffffff,
+);
+
+$secondary: (
+  0: #000000, 10: #311300, 20: #512300, 30: #733500, 40: #974800,
+  50: #bd5b00, 70: #ff8d3a, 80: #ffb689, 90: #ffdbc7, 95: #ffede4, 100: #ffffff,
+);
+
+$tertiary: (
+  0: #000000, 10: #281900, 20: #432c00, 30: #604100, 40: #7e5700,
+  50: #9e6e00, 70: #dba133, 80: #fabc4c, 90: #ffdeac, 95: #ffeeda, 100: #ffffff,
+);
+
+$neutral: (
+  0: #000000, 10: #251816, 20: #3c2d2a, 30: #544340, 40: #6c5a57,
+  50: #86736f, 70: #bda6a3, 80: #d9c1bd, 90: #f6ddd9, 95: #ffedea, 100: #ffffff,
+);
+
+$escalas: (primary: $primary, secondary: $secondary, tertiary: $tertiary, neutral: $neutral);
+
+// Colores base indicados por la marca
+$kt-primary: #d32f1e;
+$kt-secondary: #f47c18;
+$kt-tertiary: #e5a93b;
+$kt-neutral: #241715;
+
+:root {
+  --kt-primary: #{$kt-primary};
+  --kt-secondary: #{$kt-secondary};
+  --kt-tertiary: #{$kt-tertiary};
+  --kt-neutral: #{$kt-neutral};
+
+  @each $nombre, $escala in $escalas {
+    @each $tono, $color in $escala {
+      --kt-#{$nombre}-#{$tono}: #{$color};
+    }
+  }
+
+  // Botón principal del tablero de marca
+  --kt-accion: #af1106;
+
+  // Superficies cálidas derivadas de la paleta
+  --kt-fondo: #fff8f6;
+  --kt-superficie: #ffe9e6;
+  --kt-superficie-alta: #fce3df;
+  --kt-linea: #ecd2ce;
+  --kt-texto: #{$kt-neutral};
+  --kt-texto-suave: #544340;
+  --kt-texto-tenue: #86736f;
+
+  --kt-exito: #2e7d4f;
+  --kt-aviso: #9e6e00;
+
+  --kt-fuente-titulo: 'Epilogue Variable', 'Epilogue', 'Segoe UI', sans-serif;
+  --kt-fuente-texto: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+
+  --kt-radio-chico: 8px;
+  --kt-radio: 14px;
+  --kt-radio-grande: 24px;
+  --kt-ancho-max: 1180px;
+  --kt-alto-navbar: 68px;
+}

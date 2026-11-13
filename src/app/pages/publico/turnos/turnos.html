@@ -1,0 +1,34 @@
+<div class="pagina">
+  <header class="cabecera-pagina">
+    <h1>Tus turnos</h1>
+    <p>Cuando tu número aparezca en “Listos”, acércate al mostrador. Se actualiza solo.</p>
+  </header>
+
+  @if (sinConexion()) {
+    <p class="aviso-error" role="alert">Perdimos la conexión. Mostramos el último estado conocido.</p>
+  }
+
+  <div class="tableros">
+    <section class="tablero preparacion" aria-labelledby="titulo-prep">
+      <h2 id="titulo-prep"><i class="pi pi-clock"></i> En preparación</h2>
+      <ul>
+        @for (numero of turnos()?.enPreparacion ?? []; track numero) {
+          <li>{{ numero }}</li>
+        } @empty {
+          <li class="vacio">Sin pedidos en cocina</li>
+        }
+      </ul>
+    </section>
+
+    <section class="tablero listos" aria-labelledby="titulo-listos" aria-live="polite">
+      <h2 id="titulo-listos"><i class="pi pi-check-circle"></i> Listos</h2>
+      <ul>
+        @for (numero of turnos()?.listos ?? []; track numero) {
+          <li>{{ numero }}</li>
+        } @empty {
+          <li class="vacio">Aún no hay pedidos listos</li>
+        }
+      </ul>
+    </section>
+  </div>
+</div>

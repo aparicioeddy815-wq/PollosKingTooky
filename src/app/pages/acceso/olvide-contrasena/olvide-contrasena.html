@@ -1,0 +1,23 @@
+<app-acceso-tarjeta titulo="Recupera tu contraseña" subtitulo="Te enviaremos un enlace a tu correo para crear una nueva.">
+  @if (confirmacion()) {
+    <p class="confirmacion" role="status"><i class="pi pi-check-circle"></i> {{ confirmacion() }}</p>
+  } @else {
+    <form class="formulario" [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+      @if (error()) {
+        <p class="aviso-error" role="alert">{{ error() }}</p>
+      }
+
+      <div class="campo">
+        <label for="correo">Correo</label>
+        <input pInputText id="correo" type="email" formControlName="correo" autocomplete="email" />
+        @if (formulario.controls.correo.touched && formulario.controls.correo.invalid) {
+          <small class="error">Escribe un correo válido.</small>
+        }
+      </div>
+
+      <p-button type="submit" label="Enviar enlace" [loading]="enviando()" styleClass="boton-ancho" />
+    </form>
+  }
+
+  <p class="pie"><a routerLink="/ingresar">Volver a ingresar</a></p>
+</app-acceso-tarjeta>

@@ -1,0 +1,42 @@
+.encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+
+  input {
+    min-width: 240px;
+  }
+}
+
+.descripcion {
+  max-width: 44ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--kt-texto-tenue);
+  font-size: 0.88rem;
+}
+
+.interruptor {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: var(--kt-texto-suave);
+}
+
+.vacio {
+  padding: 2rem;
+  text-align: center;
+  color: var(--kt-texto-tenue);
+}

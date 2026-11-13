@@ -1,0 +1,139 @@
+@use 'mixins' as m;
+
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--kt-alto-navbar);
+  background: rgb(255 248 246 / 92%);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--kt-linea);
+}
+
+.barra-interior {
+  @include m.contenedor;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.marca img {
+  height: 40px;
+  width: auto;
+}
+
+.hamburguesa {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--kt-radio-chico);
+  background: transparent;
+  color: var(--kt-texto);
+  font-size: 1.3rem;
+  cursor: pointer;
+
+  @include m.desde(960px) {
+    display: none;
+  }
+}
+
+.navegacion {
+  position: absolute;
+  top: var(--kt-alto-navbar);
+  left: 0;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1.25rem 1.5rem;
+  background: var(--kt-fondo);
+  border-bottom: 1px solid var(--kt-linea);
+
+  &.abierto {
+    display: flex;
+  }
+
+  @include m.desde(960px) {
+    position: static;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 0 2.5rem;
+    background: transparent;
+    border: 0;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include m.desde(960px) {
+      flex-direction: row;
+      gap: 0.25rem;
+    }
+  }
+
+  li a {
+    display: block;
+    padding: 0.55rem 0.9rem;
+    border-radius: var(--kt-radio-chico);
+    color: var(--kt-texto-suave);
+    font-weight: 600;
+
+    &:hover {
+      background: var(--kt-superficie);
+      text-decoration: none;
+    }
+
+    &.activo {
+      background: var(--kt-superficie-alta);
+      color: var(--kt-primary-30);
+    }
+  }
+}
+
+.acciones {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.3rem 0.7rem 0.3rem 0.3rem;
+  border: 1px solid var(--kt-linea);
+  border-radius: 999px;
+  background: var(--kt-superficie);
+  color: var(--kt-texto);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+
+  .nombre {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+:host ::ng-deep .avatar-kt {
+  background: var(--kt-accion);
+  color: #fff;
+  font-weight: 700;
+}

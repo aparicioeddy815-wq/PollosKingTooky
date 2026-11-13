@@ -1,0 +1,62 @@
+.encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+:host ::ng-deep .tabla-pedidos {
+  overflow-x: auto;
+}
+
+.turno {
+  font-family: var(--kt-fuente-titulo);
+  font-size: 1.2rem;
+}
+
+.espera {
+  color: var(--kt-texto-tenue);
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.detalle {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  list-style: none;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  em {
+    color: var(--kt-texto-tenue);
+  }
+}
+
+.vacio {
+  padding: 2rem;
+  text-align: center;
+  color: var(--kt-texto-tenue);
+}

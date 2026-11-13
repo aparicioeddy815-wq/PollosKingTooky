@@ -1,0 +1,81 @@
+@use 'mixins' as m;
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--kt-radio);
+  background: var(--kt-superficie);
+}
+
+.foto {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--kt-secondary-90), var(--kt-tertiary-90));
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.estrella {
+  width: 64px;
+  height: 64px;
+  background: var(--kt-primary);
+  opacity: 0.85;
+  @include m.forma-estrella;
+}
+
+.sello {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: var(--kt-neutral);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.cuerpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1.1rem 1.1rem;
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+}
+
+.descripcion {
+  flex: 1;
+  color: var(--kt-texto-suave);
+  font-size: 0.9rem;
+}
+
+.pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.precio {
+  font-family: var(--kt-fuente-titulo);
+  font-size: 1.2rem;
+  color: var(--kt-primary-40);
+}
+
+.agotado .foto img {
+  filter: grayscale(0.8);
+}

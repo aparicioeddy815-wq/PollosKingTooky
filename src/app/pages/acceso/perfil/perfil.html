@@ -1,0 +1,44 @@
+<div class="pagina">
+  <header class="cabecera-pagina">
+    <h1>Mi perfil</h1>
+    @if (perfil(); as p) {
+      <p>
+        {{ p.nombreUsuario }} · {{ p.rol }} · en King Tooky desde {{ p.fechaIngreso | date: 'longDate' }}
+      </p>
+    }
+  </header>
+
+  <div class="columnas">
+    <form class="formulario bloque" [formGroup]="datos" (ngSubmit)="guardarDatos()" novalidate>
+      <h2>Tus datos</h2>
+      <div class="campo">
+        <label for="nombre">Nombre completo</label>
+        <input pInputText id="nombre" formControlName="nombreCompleto" />
+      </div>
+      <div class="campo">
+        <label for="correo">Correo</label>
+        <input pInputText id="correo" type="email" formControlName="correo" />
+        @if (datos.controls.correo.touched && datos.controls.correo.invalid) {
+          <small class="error">Escribe un correo válido.</small>
+        }
+      </div>
+      <p-button type="submit" label="Guardar cambios" [loading]="guardando()" />
+    </form>
+
+    <form class="formulario bloque" [formGroup]="clave" (ngSubmit)="cambiarContrasena()" novalidate>
+      <h2>Cambiar contraseña</h2>
+      <div class="campo">
+        <label for="actual">Contraseña actual</label>
+        <p-password inputId="actual" formControlName="contrasenaActual" [feedback]="false" [toggleMask]="true" />
+      </div>
+      <div class="campo">
+        <label for="nueva">Nueva contraseña</label>
+        <p-password inputId="nueva" formControlName="nuevaContrasena" [feedback]="false" [toggleMask]="true" />
+        @if (clave.controls.nuevaContrasena.touched && clave.controls.nuevaContrasena.invalid) {
+          <small class="error">Mínimo 6 caracteres.</small>
+        }
+      </div>
+      <p-button type="submit" label="Actualizar contraseña" severity="secondary" [loading]="cambiando()" />
+    </form>
+  </div>
+</div>

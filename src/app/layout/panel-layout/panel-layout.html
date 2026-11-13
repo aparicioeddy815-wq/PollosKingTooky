@@ -1,0 +1,17 @@
+<div class="panel">
+  <aside class="lateral">
+    <p class="rol">{{ rol() }}</p>
+    <nav aria-label="Secciones del panel">
+      @for (seccion of secciones(); track seccion.ruta) {
+        <a [routerLink]="seccion.ruta" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">
+          <i [class]="seccion.icono" aria-hidden="true"></i>
+          <span>{{ seccion.texto }}</span>
+        </a>
+      }
+    </nav>
+  </aside>
+
+  <section class="contenido">
+    <router-outlet />
+  </section>
+</div>
