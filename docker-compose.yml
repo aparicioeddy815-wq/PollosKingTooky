@@ -49,7 +49,7 @@ services:
         condition: service_started
     environment:
       TZ: America/La_Paz
-      url: ${DB_URL:jdbc:postgresql://localhost:5433/king_tokky}
+      url: ${DB_URL:-jdbc:postgresql://localhost:5433/king_tokky}
       DB_USER: ${DB_USER:-kingtokky}
       DB_PASSWORD: ${DB_PASSWORD:-kingtokky}
       JWT_SECRETO: ${JWT_SECRETO:-king-tokky-clave-de-desarrollo-cambiar-en-produccion-2026}

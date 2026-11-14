@@ -22,4 +22,11 @@ public interface MovimientoInventarioRepository extends JpaRepository<Movimiento
             where m.tipo = :tipo and m.fechaHora >= :desde group by m.insumo.id
             """)
     List<Object[]> consumoDesde(@Param("tipo") TipoMovimiento tipo, @Param("desde") LocalDateTime desde);
+
+    /** Movimientos desde una fecha, del más antiguo al más reciente, con su insumo (para las gráficas). */
+    @Query("""
+            select m from MovimientoInventario m join fetch m.insumo
+            where m.fechaHora >= :desde order by m.fechaHora asc
+            """)
+    List<MovimientoInventario> desdeConInsumo(@Param("desde") LocalDateTime desde);
 }
