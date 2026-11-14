@@ -1,5 +1,6 @@
 import { CategoriaProducto } from '../models/producto.model';
 import { CategoriaQueja, TipoQueja } from '../models/cliente.model';
+import { MotivoMerma } from '../models/inventario.model';
 import { EstadoPedido, TipoPedido } from '../models/pedido.model';
 import { EstadoReserva } from '../models/reserva.model';
 
@@ -16,8 +17,8 @@ export const CATEGORIAS_PRODUCTO: Opcion<CategoriaProducto>[] = [
   { etiqueta: 'Bebidas', valor: 'BEBIDAS' },
 ];
 
+// Mismos estados que maneja el backend: el pedido nace "En preparación"
 export const ESTADOS_PEDIDO: Opcion<EstadoPedido>[] = [
-  { etiqueta: 'Pendiente', valor: 'PENDIENTE' },
   { etiqueta: 'En preparación', valor: 'EN_PREPARACION' },
   { etiqueta: 'Listo', valor: 'LISTO' },
   { etiqueta: 'Entregado', valor: 'ENTREGADO' },
@@ -49,6 +50,14 @@ export const CATEGORIAS_QUEJA: Opcion<CategoriaQueja>[] = [
   { etiqueta: 'Comida', valor: 'COMIDA' },
   { etiqueta: 'Tiempo de espera', valor: 'TIEMPO_ESPERA' },
   { etiqueta: 'Limpieza', valor: 'LIMPIEZA' },
+  { etiqueta: 'Otro', valor: 'OTRO' },
+];
+
+export const MOTIVOS_MERMA: Opcion<MotivoMerma>[] = [
+  { etiqueta: 'Vencimiento', valor: 'VENCIMIENTO' },
+  { etiqueta: 'Deterioro', valor: 'DETERIORO' },
+  { etiqueta: 'Caída', valor: 'CAIDA' },
+  { etiqueta: 'Error de preparación', valor: 'ERROR_PREPARACION' },
   { etiqueta: 'Otro', valor: 'OTRO' },
 ];
 

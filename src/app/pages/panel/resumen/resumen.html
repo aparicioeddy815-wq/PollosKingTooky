@@ -79,5 +79,15 @@
         </ul>
       }
     </section>
+
+    <section class="bloque">
+      <h2>Ventas de los últimos 7 días</h2>
+      <app-grafica tipo="linea" formato="bs" titulo="Ventas diarias" [etiquetas]="etiquetasTendencia()" [series]="seriesTendencia()" />
+    </section>
+
+    <section class="bloque">
+      <h2>Participación por categoría</h2>
+      <app-grafica tipo="dona" formato="bs" titulo="Ventas por categoría" centro="Bs vendidos" [etiquetas]="etiquetasCategoria()" [series]="seriesCategoria()" />
+    </section>
   </div>
 }

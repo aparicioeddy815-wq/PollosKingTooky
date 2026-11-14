@@ -11,3 +11,9 @@ export function aHoraIso(fecha: Date): string {
   const minutos = String(fecha.getMinutes()).padStart(2, '0');
   return `${horas}:${minutos}`;
 }
+
+/** "2026-11-13" → "13/11", para los ejes de las gráficas. */
+export function etiquetaDia(fechaIso: string): string {
+  const [, mes, dia] = fechaIso.split('-');
+  return `${dia}/${mes}`;
+}

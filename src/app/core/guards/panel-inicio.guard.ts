@@ -2,8 +2,9 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-// Sección inicial del panel según los permisos de cada rol
+// Sección inicial del panel según los permisos de cada rol (el orden importa)
 const SECCIONES = [
+  { permiso: 'PANEL_ADMIN', ruta: '/panel/admin' },
   { permiso: 'PANEL_GERENTE', ruta: '/panel/resumen' },
   { permiso: 'PEDIDO_LEER', ruta: '/panel/pedidos' },
   { permiso: 'PRODUCTO_LEER', ruta: '/panel/productos' },

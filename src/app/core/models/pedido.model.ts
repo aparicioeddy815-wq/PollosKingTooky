@@ -1,5 +1,5 @@
-export type EstadoPedido = 'PENDIENTE' | 'EN_PREPARACION' | 'LISTO' | 'ENTREGADO' | 'CANCELADO';
-export type TipoPedido = 'LOCAL' | 'PARA_LLEVAR' | 'PEDIDOSYA';
+export type EstadoPedido = 'EN_PREPARACION' | 'LISTO' | 'ENTREGADO' | 'CANCELADO';
+export type TipoPedido = 'LOCAL' | 'PARA_LLEVAR' | 'PEDIDOSYA' | 'RESERVA';
 
 export interface DetallePedido {
   idProducto: number;
@@ -22,6 +22,8 @@ export interface Pedido {
   horaListo: string | null;
   horaEntrega: string | null;
   minutosTranscurridos: number;
+  cliente?: string | null;
+  codigoReserva?: string | null;
   detalles: DetallePedido[];
 }
 

@@ -1,11 +1,20 @@
 <header class="encabezado">
   <div class="cabecera-pagina">
-    <h1>Pedidos</h1>
-    <p>Sigue cada turno desde que entra hasta que se entrega. La lista se actualiza sola.</p>
+    <h1>Comandas en vivo</h1>
+    <p>Cada turno entra en preparación, se marca listo y se entrega. La lista se actualiza sola en tiempo real.</p>
   </div>
-  @if (auth.tienePermiso('PEDIDO_CREAR')) {
-    <a routerLink="/panel/pedidos/nuevo"><p-button label="Nuevo pedido" icon="pi pi-plus" /></a>
-  }
+  <div class="acciones-cabecera">
+    <p-button
+      [label]="sonido.activo() ? 'Timbre activado' : 'Activar timbre'"
+      [icon]="sonido.activo() ? 'pi pi-volume-up' : 'pi pi-volume-off'"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="alternarSonido()"
+    />
+    @if (auth.tienePermiso('PEDIDO_CREAR')) {
+      <a routerLink="/panel/pedidos/nuevo"><p-button label="Nuevo pedido" icon="pi pi-plus" /></a>
+    }
+  </div>
 </header>
 
 <div class="filtros">
@@ -37,8 +46,11 @@
       <td><app-estado-tag [estado]="pedido.estado" /></td>
       <td>
         {{ pedido.fechaHora | date: 'HH:mm' }}
-        @if (pedido.estado === 'PENDIENTE' || pedido.estado === 'EN_PREPARACION') {
+        @if (pedido.estado === 'EN_PREPARACION') {
           <small class="espera">· {{ pedido.minutosTranscurridos }} min</small>
+        }
+        @if (pedido.estado === 'LISTO') {
+          <small class="espera">· listo en el mostrador</small>
         }
       </td>
       <td>{{ pedido.total | bs }}</td>
@@ -46,10 +58,6 @@
         @if (auth.tienePermiso('PEDIDO_ESTADO')) {
           <div class="acciones">
             @switch (pedido.estado) {
-              @case ('PENDIENTE') {
-                <p-button label="Preparar" size="small" (onClick)="preparar(pedido)" />
-                <p-button label="Cancelar" size="small" [text]="true" (onClick)="cancelar(pedido)" />
-              }
               @case ('EN_PREPARACION') {
                 <p-button label="Listo" icon="pi pi-check" size="small" (onClick)="marcarListo(pedido)" />
                 <p-button label="Cancelar" size="small" [text]="true" (onClick)="cancelar(pedido)" />

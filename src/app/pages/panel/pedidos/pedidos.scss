@@ -60,3 +60,13 @@
   text-align: center;
   color: var(--kt-texto-tenue);
 }
+.acciones-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+
+  a:hover {
+    text-decoration: none;
+  }
+}
